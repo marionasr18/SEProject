@@ -7,16 +7,13 @@ import { LoadingContext } from "./LoadingContextWrapper";
 
 
 
-const Friends = () => {
+const Footer = () => {
 
     
     return (
-        <>
-        <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div>
-        <div className="row mt-3"> 
-        <div className="col-4">Search </div></div>
-        </>
-        
+       <footer>
+        <span>Made with Love </span>
+       </footer>
     )
 }
-export default Friends;
+export default Footer;
