@@ -6,9 +6,6 @@ import './App.css'
 export function Auth() {
     const navigate = useNavigate();
     const location = useLocation();
-
-
-
     useEffect(() => {
         debugger
         if (location.pathname === "signUp") {
@@ -19,7 +16,7 @@ export function Auth() {
         }
         else {
             if (location.pathname === '/') {
-                navigate('/')
+                navigate('/profile')
             }
         }
         if (sessionStorage.getItem("item_key") === 'regular') {
