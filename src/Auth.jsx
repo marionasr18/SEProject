@@ -19,11 +19,11 @@ export function Auth() {
                 navigate('/profile')
             }
         }
-        if (sessionStorage.getItem("item_key") === 'regular') {
+        // if (sessionStorage.getItem("item_key") === 'regular') {
 
-            navigate('/profile', { replace: true })
+        //     navigate('/', { replace: true })
 
-        }
+        // }
     }, [location.pathname])
 
 

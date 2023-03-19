@@ -35,6 +35,12 @@ function Profile() {
         <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
           Blog
         </a>
+        <a href="/sportsDefinition" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
+          Sports Definition
+        </a>
+        <a href="/fieldsDefinition" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
+          Fields Definition
+        </a>
       </div>
        <div>
         <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" onClick={handleLogout}>Sign out</button>
