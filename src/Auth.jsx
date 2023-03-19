@@ -7,7 +7,6 @@ export function Auth() {
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
-        debugger
         if (location.pathname === "signUp") {
             navigate('/signUp', { replace: true })
         }

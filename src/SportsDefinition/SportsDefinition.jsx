@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom"
 import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import Footer from "../Footer";
+import NavigationBar from "../NavigationBar";
 
 
 
 
 const SportsDefinition = () => {
+
+    const nav = useNavigate();
+
     const STATE = {
-        sportsCode: '2',
+        sportsCode: '',
         sportsName: '',
         sportsDesc: '',
     }
@@ -29,13 +33,25 @@ const SportsDefinition = () => {
                 [e.target.name]:e.target.value
             }
         })
-    })
+    },[])
+    const handleBack = useCallback(() => {
+        nav(-1)
+    }, [])
 
     return (
+        <>
+         <NavigationBar/>
         <div className="row ml-5">
+            
             <div className="col-12">
-            <div className="row mt-4 ml-4 title text-primary">Sports Definition</div>
-            <div className="row mt-5">
+            <div className="row mt-4" >
+                        <div className="col-7 ml-4 title text-primary">
+                            Fields Definition
+                        </div>
+                        <div className="col-2 offset-3 ml-4 title text-primary">
+                            <button className="btn btn-danger" onClick={handleBack}>Back</button>
+                        </div>
+                    </div>            <div className="row mt-5">
                 <div className="col-3">Sports Code</div>
                 <div className="col-5">
                     <input type="text" className="form-control"  value={state.sportsCode}  name="sportsCode" onChange={handleChange} />
@@ -61,7 +77,7 @@ const SportsDefinition = () => {
 
             </div>
             </div>
-        </div>
+        </div></>
 
     )
 }
