@@ -10,6 +10,7 @@ export function Auth() {
 
 
     useEffect(() => {
+        debugger
         if (location.pathname === "signUp") {
             navigate('/signUp', { replace: true })
         }
@@ -21,7 +22,7 @@ export function Auth() {
                 navigate('/')
             }
         }
-        if (sessionStorage.getItem("item_key") === 'admin') {
+        if (sessionStorage.getItem("item_key") === 'regular') {
 
             navigate('/profile', { replace: true })
 

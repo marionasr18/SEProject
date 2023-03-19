@@ -8,8 +8,14 @@ import { LoadingContext } from "./LoadingContextWrapper";
 
 
 const Friends = () => {
+    const FillData=useCallback(async()=>{
+let data = await FetchData('DataFiles/PlayersData.json','get')
+console.log(data.data)
+    },[])
+useEffect(()=>{
+FillData()
+},[])
 
-    
     return (
         <>
         <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div>
