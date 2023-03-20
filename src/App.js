@@ -10,6 +10,8 @@ import Loading from "./Loading";
 import LoadingContextWrapper from "./LoadingContextWrapper";
 import Profile from "./Profile";
 import Friends from "./Friends";
+import SportsDefinition from "./SportsDefinition/SportsDefinition";
+import FieldDefinition from "./FieldDefinition/FieldDefinition";
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
             <Route index element={<Profile />} />
             </Route>
             <Route path='/friends'><Route index element={<Friends />} /></Route>
+            <Route path='/sportsDefinition'><Route index element={<SportsDefinition />} /></Route>
+            <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
          
 
         </Route>

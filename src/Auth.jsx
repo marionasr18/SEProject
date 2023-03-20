@@ -6,9 +6,6 @@ import './App.css'
 export function Auth() {
     const navigate = useNavigate();
     const location = useLocation();
-
-
-
     useEffect(() => {
         if (location.pathname === "signUp") {
             navigate('/signUp', { replace: true })
@@ -18,14 +15,14 @@ export function Auth() {
         }
         else {
             if (location.pathname === '/') {
-                navigate('/')
+                navigate('/profile')
             }
         }
-        if (sessionStorage.getItem("item_key") === 'admin') {
+        // if (sessionStorage.getItem("item_key") === 'regular') {
 
-            navigate('/profile', { replace: true })
+        //     navigate('/', { replace: true })
 
-        }
+        // }
     }, [location.pathname])
 
 
