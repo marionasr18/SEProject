@@ -43,6 +43,15 @@ function Profile() {
   </nav>
   <div className='row ml-4 title'>Welcome !
 </div>
+
+<script>
+if ("geolocation" in navigator) {
+  console.log("GPS Available")
+} else {
+  console.log("GPS not Available")
+}
+
+</script>
 <Footer/>
   </> );
 }
