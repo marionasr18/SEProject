@@ -7,6 +7,6 @@ export default function Loading() {
 
     return (
         isLoading > 0 &&
-        <img src={logo} alt='loading' className='center offset-3' />
+        <img src={logo} alt='loading' className='rounded mx-auto d-block' />
     )
 }

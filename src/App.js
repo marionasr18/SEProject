@@ -39,6 +39,7 @@ function App() {
             <Route path='/friends'><Route index element={<Friends />} /></Route>
             <Route path='/sportsDefinition'><Route index element={<SportsDefinition />} /></Route>
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
+            <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
          
 
         </Route>
