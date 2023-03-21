@@ -46,7 +46,7 @@ const SportsDefinition = () => {
             <div className="col-12">
             <div className="row mt-4" >
                         <div className="col-7 ml-4 title text-primary">
-                            Fields Definition
+                            Sports Definition
                         </div>
                         <div className="col-2 offset-3 ml-4 title text-primary">
                             <button className="btn btn-danger" onClick={handleBack}>Back</button>

@@ -50,7 +50,7 @@ const FieldDefinition = () => {
     return (
         <>
             <NavigationBar />
-            <div className="row ml-5">
+            <div className="row ml-5 animated fadeIn activeComponent">
                 <div className="col-12">
                     {/* <div className="row">
                         <div className="col-2 offset-10">
