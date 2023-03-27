@@ -12,6 +12,7 @@ import Profile from "./Profile";
 import Friends from "./Friends";
 import SportsDefinition from "./SportsDefinition/SportsDefinition";
 import FieldDefinition from "./FieldDefinition/FieldDefinition";
+import CreateJoinGame from "./ChatingRoom/CreateJoinGame";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path='/sportsDefinition'><Route index element={<SportsDefinition />} /></Route>
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
+            <Route path='/createJoinGame'><Route index element={<CreateJoinGame />} /></Route>
          
 
         </Route>
