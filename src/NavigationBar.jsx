@@ -26,6 +26,9 @@ function NavigationBar() {
     </div>
     <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div className="text-sm lg:flex-grow">
+        <a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
+         <span>Home </span>
+        </a>
         <a href="/friends" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
          <span>Friends  </span>
         </a>
