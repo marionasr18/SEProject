@@ -2,14 +2,14 @@
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useNavigate } from 'react-router-dom';
-import Footer from './Footer';
+import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 function NavigationBar() {
   const nav = useNavigate();
 
-      const handleLogout = () => {
-        localStorage.removeItem('auth')
-        sessionStorage.removeItem('item_key');
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    sessionStorage.removeItem("item_key");
 
         nav("/", { replace: true })
     }
@@ -26,14 +26,17 @@ function NavigationBar() {
     </div>
     <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div className="text-sm lg:flex-grow">
+        <a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
+         <span>Home </span>
+        </a>
         <a href="/friends" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
-         <span>Friends</span>
+         <span>Friends  </span>
         </a>
         <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
           Games
         </a>
-        <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
-          Blog
+        <a href="editProfile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          Profile
         </a>
         <a href="/sportsDefinition" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
           Sport Definition
@@ -47,6 +50,7 @@ function NavigationBar() {
       </div> 
     </div>
   </nav>
+
   </> );
 }
 
