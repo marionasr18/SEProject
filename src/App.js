@@ -9,9 +9,11 @@ import UserContextWrapper from "./LoadingContextWrapper";
 import Loading from "./Loading";
 import LoadingContextWrapper from "./LoadingContextWrapper";
 import Profile from "./Profile";
-import Friends from "./Friends";
 import SportsDefinition from "./SportsDefinition/SportsDefinition";
 import FieldDefinition from "./FieldDefinition/FieldDefinition";
+import EventDefinition from "./EventDefinition/EventDefinition";
+import Friends from "./FriendsDefinition/Friends";
+import FriendsDefinition from "./FriendsDefinition/FriendsDefinition";
 
 
 function App() {
@@ -36,10 +38,11 @@ function App() {
             <Route path='/profile'>
             <Route index element={<Profile />} />
             </Route>
-            <Route path='/friends'><Route index element={<Friends />} /></Route>
+            <Route path='/friends'><Route index element={<FriendsDefinition />} /></Route>
             <Route path='/sportsDefinition'><Route index element={<SportsDefinition />} /></Route>
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
+            <Route path='/event'><Route index element={<EventDefinition />} /></Route>
          
 
         </Route>

@@ -55,7 +55,7 @@ const drawArticles = useCallback(() => {
       <>
         <a href={`${e.url}`} target="_blank" className="col-3 items-center bg-white border border-gray-200 rounded-lg shadow-md max-w-sm m-5 p-4">
           <img className="object-cover w-full h-48 rounded-t-lg" src={e.urlToImage} alt="" />
-          <div className="flex flex-col justify-between mt-4">
+          <div className="flex flex-col justify-between ">
             <h5 className="text-lg font-bold text-gray-400 dark:text-white">{e.content}</h5>
             <p className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">{e.description}</p>
           </div>
