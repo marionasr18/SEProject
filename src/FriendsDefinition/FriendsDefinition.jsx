@@ -1,11 +1,16 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
-import { FetchData } from "./functions";
-import { useNavigate } from "react-router-dom";
-import "./App.css";
-import { LoadingContext } from "./LoadingContextWrapper";
-import NavigationBar from "./NavigationBar";
+import { FetchData } from "../functions";
+import { useNavigate } from "react-router-dom"
+import '../App.css'
+import { LoadingContext } from "../LoadingContextWrapper";
+import NavigationBar from "../NavigationBar";
+import Friends from "./Friends";
 
-const Friends = () => {
+
+
+
+const FriendsDefinition = () => {
+
     const STATE = {
         playersList: [],
         playersListNotFiltered: [],
@@ -78,16 +83,9 @@ const Friends = () => {
     return (
         <>
             <NavigationBar />
-            <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div>
-            <div className="row mt-3">
-                <div className="col-2 ml-5">Search </div>
-                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" onBlur={handleChange} /></div>
-            </div>
-            <div className="row mt-4">
-                {drawCards()}
-            </div>
+           <Friends/>
         </>
 
     )
 }
-export default Friends;
+export default FriendsDefinition;
