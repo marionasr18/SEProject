@@ -5,11 +5,7 @@ import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import NavigationBar from "../NavigationBar";
 
-
-
-
 const Friends = () => {
-
     const STATE = {
         playersList: [],
         playersListNotFiltered: [],
