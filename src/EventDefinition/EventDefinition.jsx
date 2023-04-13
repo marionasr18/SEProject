@@ -42,7 +42,6 @@ const EventDefinition = () => {
     }, [])
     console.log(state)
     const handleChange = useCallback((e) => {
-        debugger
         setState(prv => {
             return {
                 ...prv,
@@ -86,7 +85,14 @@ const EventDefinition = () => {
                         <div className="col-3">
                             <Select
                                 defaultValue={state.sports}
-                                onChange={handleChange}
+                               onChange={(e)=>{
+                                console.log(e)
+                                setState(prv=>{
+                                    return{
+                                        ...prv,
+                                        sports:e.value
+                                    }
+                                })}}
                                 options={state.sportsOptions}
                             />
                         </div>
