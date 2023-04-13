@@ -27,27 +27,27 @@ function NavigationBar() {
       </div>
       <div className="w-full block flex-grow lg:flex lg:items-center ">
         <div className="text-sm lg:flex-grow">
-          <a href="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
+          <a href="/profile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
             <span className='lead'>Home </span>
           </a>
-          <a href="/friends" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
+          <a href="/friends" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
             <span className='lead'>Friends  </span>
           </a>
-          <a href="/event" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          <a href="/event" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Games</span>
           </a>
-          <a href="editProfile" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          <a href="editProfile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Profile</span>
           </a>
-          {user && <> <a href="/sportsDefinition" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          {user && <> <a href="/sportsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Sport Definition</span>
           </a>
-            <a href="/fieldsDefinition" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+            <a href="/fieldsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
               <span className='lead'>Fields Definition</span>
             </a></>}
         </div>
         <div>
-          <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" onClick={handleLogout}>Sign out</button>
+          <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white lg:mt-0" onClick={handleLogout}>Sign out</button>
         </div>
       </div>
     </nav>

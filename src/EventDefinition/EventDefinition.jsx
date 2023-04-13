@@ -8,9 +8,9 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import NavigationBar from "../NavigationBar";
 import "react-datepicker/dist/react-datepicker.css";
-
-
-
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 
 
 const EventDefinition = () => {
@@ -32,6 +32,8 @@ const EventDefinition = () => {
 
     const [state, setState] = useState(STATE)
     const [dateOfEvent, setDateOfEvent] = useState(new Date());
+    const [startTime, setStartTime] = useState('10:00');
+    const [endtTime, setEndtTime] = useState('10:00');
 
     const FillData = useCallback(async () => {
         let data = await FetchData('DataFiles/PlayersData.json', 'get')
@@ -64,14 +66,17 @@ const EventDefinition = () => {
         <>
             <NavigationBar />
             <div className="row">
-                <div className="col-6 offset-4">
+                <div className="col-8 offset-4">
                     <nav className="navbar navbar-expand-lg navbar-light">
                         <ul className="navbar-nav">
-                            <li className={state.tabid === 1 ? "nav-item active text-danger" : "nav-item"}>
-                                <a className="nav-link" onClick={() => toggleNav(1)}>Create New Game <span className="sr-only">(current)</span></a>
+                            <li className={state.tabid === 1 ? "nav-item active" : "nav-item"}>
+                                <a className= {state.tabid === 1 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(1)}>Create New Game <span className="sr-only">(current)</span></a>
                             </li>
-                            <li className={state.tabid === 2 ? "nav-item active text-danger" : "nav-item"}>
-                                <a className="nav-link" onClick={() => toggleNav(2)}>Join Game <span className="sr-only">(current)</span></a>
+                            <li className={state.tabid === 2 ? "nav-item active" : "nav-item"}>
+                                <a className={state.tabid === 2 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(2)}>Join Game <span className="sr-only">(current)</span></a>
+                            </li>
+                            <li className={state.tabid === 3 ? "nav-item active" : "nav-item"}>
+                                <a className={state.tabid === 3 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(3)}>View Created Game <span className="sr-only">(current)</span></a>
                             </li>
 
                         </ul>
@@ -108,6 +113,18 @@ const EventDefinition = () => {
                         <div className="col-4">
                         <DatePicker className="form-control" selected={dateOfEvent} onChange={(date) => setDateOfEvent(date)} />
                         </div>
+                    </div>
+                    <div className="row mt-4 ml-2">
+                        <div className="col-2">Start Time</div>
+                        <div className="col-2">
+                        <TimePicker onChange={setStartTime} value={startTime} />
+                        </div>
+                        <div className="col-2">End Time</div>
+                        <div className="col-2">
+                        <TimePicker 
+                        clockIcon={null}
+                        onChange={setEndtTime} value={endtTime} />      
+                       </div>
                     </div>
                     </>
 
