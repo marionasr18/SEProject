@@ -150,6 +150,16 @@ export default function SignUp() {
                         </div>
                     </div>
                     <div className="row mt-2">
+                        <div className="col-3">Sex</div>
+                        <div className="col-2 ">
+                            <input type="text" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                        </div>
+                        <div className="col-1">Age</div>
+                        <div className="col-2 ">
+                            <input type="number" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                        </div>
+                    </div>
+                    <div className="row mt-2">
                         <div className="col-3">Sports</div>
                         <div className="col-5">
                             <Select
