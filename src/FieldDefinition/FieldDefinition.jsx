@@ -88,7 +88,12 @@ const FieldDefinition = () => {
                         <div className="col-5">
                             <Select
                                 defaultValue={state.sports}
-                                onChange={handleChange}
+                                onChange={(e)=>{setState(prv=>{
+                                    return{
+                                        ...prv,
+                                        sports:e.value
+                                    }
+                                })}}
                                 options={state.sportsOptions}
                             />
                         </div>
