@@ -39,6 +39,12 @@ const EventDefinition = () => {
     const FillData = useCallback(async () => {
         let data = await FetchData('DataFiles/PlayersData.json', 'get')
         console.log(data.data)
+        setState(prv=>{
+            return{
+                ...prv,
+                eventArray : data.data
+            }
+        })
     }, [])
     useEffect(() => {
         FillData()
@@ -61,35 +67,33 @@ const EventDefinition = () => {
         })
     }, [])
     const drawGamesToJoin = useCallback(() => {
-        return (<>
-            <div className="shadow-card flex flex-col rounded-xl bg-white bg-clip-border">
-                <div className="mx-4 -mt-6 translate-y-0">
-                    <a blur-shadow-image="true">
-                        <img
-                            className=""
-                            src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-                            alt="card image"
-                        />
-                    </a>
+        state.eventArray?.map(e=>{
+            return (<>
+                <div className="shadow-card flex flex-col rounded-xl bg-white bg-clip-border">
+                    <div className="mx-4 -mt-6 translate-y-0">
+                            <img
+                                // className=""
+                                src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                                alt="card image"
+                            />
+                    </div>
+                    <div className="text-secondary flex-1 p-6">
+                            <h4 className="font-medium">Material Tailwind</h4>
+                        <p className="opcacity-60 mb-3">
+                            Game 1
+                        </p>
+                        <button
+                            className="middle none center rounded-lg bg-pink-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            data-ripple-light="true"
+                        >
+    Request to Join Game                    </button>
+                    </div>
                 </div>
-                <div className="text-secondary flex-1 p-6">
-                     <a href="#">
-                        <h4 className="font-medium">Material Tailwind</h4>
-                    </a> 
-                    <p className="opcacity-60 mb-3">
-                        Game 1
-                    </p>
-                    <button
-                        className="middle none center rounded-lg bg-pink-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        data-ripple-light="true"
-                    >
-                        Read More
-                    </button>
-                </div>
-            </div>
-            </> )
+                </> )
+        })
+        
 
-    }, [])
+    }, [state.eventArray])
 
     return (
         <>

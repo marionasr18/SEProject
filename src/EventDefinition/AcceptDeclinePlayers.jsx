@@ -58,7 +58,7 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
       <div className="card-content">
         <h3>{events.name}</h3>
         {/* <img src={events.image} alt={events.name} /> */}
-        <p>{events.id}</p>
+        {events.name}        <p>{events.id}</p>
       </div>
     </div>
   );

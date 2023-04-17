@@ -12,7 +12,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
 
             await awaitableTimeOut(500);
             return {
-                ...cloneDeep(resp), data: resp.data.filter(datafilterfunction)
+                ...cloneDeep(resp), data: resp.data
 
             }
         }
@@ -31,7 +31,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
             await awaitableTimeOut(500);
 
             return {
-                ...cloneDeep(resp), data: resp.data.filter(datafilterfunction)
+                ...cloneDeep(resp), data: resp.data
 
             }
             // await awaitableTimeOut(500);

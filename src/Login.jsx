@@ -17,19 +17,6 @@ const Login = () => {
     const nav = useNavigate();
     const { setIsLoading } = useContext(LoadingContext);
 
-    const getData = useCallback(async () => {
-
-        let response = await FetchData("/DataFiles/Users.json", 'get');
-
-        setUsers(response.data)
-
-    }, [])
-
-    useEffect(() => {
-        getData();
-
-    }, [])
-
 
     const handleChangePs = useCallback(
         (e) => {
@@ -49,36 +36,40 @@ const Login = () => {
     async function handleSubmit(e) {
         e.preventDefault();
 
+const params = {
+    
+        "username": uname,
+        "password": pass,
+     
+   
+}
+setIsLoading(prv => prv + 1);
+        let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params);
 
-
-
-        const userData = users.find((user) => user.username === uname);
+console.log(userData)
+        // const userData = users.find((user) => user.username === uname);
 
         // Compare user info
+        setIsLoading(prv => prv - 1)
 
         if (userData) {
             setRole(userData)
-            if (userData.pass !== pass) {
+            if (userData.data.success === 0) {
                 // Invalid password
-                alert("Invalid pass")
-            } else {
-                setIsLoading(prv => prv + 1);
-                setTimeout(() => {
-                    setIsLoading(prv => prv - 1)
-                    localStorage.setItem('auth', btoa(JSON.stringify(userData)))
-                    sessionStorage.setItem("item_key", userData.role);
-
+                alert("Invalid Username or Password")
+            } else if (userData.data.success === 1) {
+                
+              
+                    localStorage.setItem('auth',userData.data.token)
+                    sessionStorage.setItem("item_key",uname);
                     nav("/profile", { replace: true })
-
-
-                }, 2000)
 
 
 
             }
         } else {
             // Username not found
-            alert("Invalid Username")
+            alert("Invalid Username or Password")
         }
     }
     const handleSignUp = useCallback(() => {

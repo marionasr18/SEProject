@@ -26,11 +26,13 @@ export default function SignUp() {
     const loc = useLocation()
     console.log(loc)
     const STATE = {
-        fieldsCode: '',
+        email: '',
         imgUrl: '',
-        fieldsName: '',
-        fieldsDesc: '',
-        fieldsLocation: '',
+        sex: '',
+        phoneNb: '',
+        dob: '',
+        password: '',
+        passwordConfirm: '',
         sports: '',
         sportsOptions: [{ value: 'bas', label: 'Baskteball' },
         { value: 'voll', label: 'Volley Ball' },
@@ -77,6 +79,24 @@ export default function SignUp() {
 
         nav(-1)
     }, [])
+    const handleSaveUser=useCallback(async()=>{
+        let params = {
+           username:state.username,
+           email:state.email,
+           dob:state.dob,
+           address:state.address,
+           password:state.password,
+           gender:'M',
+           phoneNumber :state.phoneNb,
+        }
+        debugger
+        console.log(params)
+ const data = await FetchData('http://localhost:3001/api/users/createUser','post',params)
+ if(data.success===1){
+    alert('Sign Up succesfully. please return to Login Page')
+    nav('/login')
+ }
+    },[state])
     // const handlePassConfirm = useCallback(
     //     (e) => {
 
@@ -124,21 +144,21 @@ export default function SignUp() {
                         </div>
                     </div>
                             <div className="row mt-3">
-                                <div className="col-3">First Name</div>
+                                <div className="col-3">Username</div>
                                 <div className="col-5">
-                                    <input type="text" className="form-control" value={state.firstCode} name="firstCode" onChange={handleChange} />
+                                    <input type="text" className="form-control" value={state.username} name="username" onChange={handleChange} />
                                 </div>
                             </div>
-                            <div className="row mt-2">
-                                <div className="col-3 required">Last Name</div>
+                             <div className="row mt-2">
+                                <div className="col-3 required">Email</div>
                                 <div className="col-5">
-                                    <input type="text" className="form-control " value={state.lastName} name="lastName" onChange={handleChange} />
+                                    <input type="text" className="form-control " value={state.email} name="email" onChange={handleChange} />
                                 </div>
-                            </div>
+                            </div> 
                             <div className="row mt-2">
                                 <div className="col-3">Password</div>
                                 <div className="col-5 ">
-                                    <input type="text" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                                    <input type="password" className="form-control " value={state.password} name="password" onChange={handleChange} ></input>
                                 </div>
                             </div>
                           
@@ -146,26 +166,43 @@ export default function SignUp() {
                     <div className="row mt-2">
                         <div className="col-3">Password Confirmation</div>
                         <div className="col-5 ">
-                            <input type="text" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                            <input type="text" className="form-control " value={state.passwordConfirm} name="passwordConfirm" onChange={handleChange} ></input>
+                        </div>
+                    </div>
+                    <div className="row mt-2">
+                        <div className="col-3">Address</div>
+                        <div className="col-5 ">
+                            <input type="text" className="form-control " value={state.address} name="address" onChange={handleChange} ></input>
                         </div>
                     </div>
                     <div className="row mt-2">
                         <div className="col-3">Sex</div>
                         <div className="col-2 ">
-                            <input type="text" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                            <input type="text" className="form-control " value={state.sex} name="sex" onChange={handleChange} ></input>
                         </div>
-                        <div className="col-1">Age</div>
+                        <div className="col-1">Date of Birth</div>
                         <div className="col-2 ">
-                            <input type="number" className="form-control " value={state.fieldsDesc} name="fieldsDesc" onChange={handleChange} ></input>
+                            <input type="number" className="form-control " value={state.dob} name="dob" onChange={handleChange} ></input>
                         </div>
                     </div>
+                    <div className="row mt-2">
+                                <div className="col-3">Phone Number</div>
+                                <div className="col-5 ">
+                                    <input type="number" className="form-control " value={state.phoneNb} name="phoneNb" onChange={handleChange} ></input>
+                                </div>
+                            </div>
                     <div className="row mt-2">
                         <div className="col-3">Sports</div>
                         <div className="col-5">
                             <Select
                                 defaultValue={state.sports}
-                                onChange={handleChange}
-                                options={state.sportsOptions}
+                                onChange={(e)=>{setState(prv=>{
+                                    return{
+                                        ...prv,
+                                        sports:e.value
+                                    }
+                                })}}                          
+                                      options={state.sportsOptions}
                             />
                         </div>
                     </div>
@@ -184,7 +221,7 @@ export default function SignUp() {
                     {loc.pathname === '/signUp' && <div className="row mt-5">
 
                         {/* <button type="button" className="btn btn-warning offset-7 col-1" style={{ backgroundColor: 'yellow', color: 'black' }}>Undo</button> */}
-                        <button type="button" className="btn btn-success col-1 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>SignUp</button>
+                        <button type="button" onClick={handleSaveUser} className="btn btn-success col-2 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>Sign Up</button>
 
                     </div>}
                 </div>
