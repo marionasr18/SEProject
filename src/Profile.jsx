@@ -19,6 +19,8 @@ function Profile() {
 FillData()
   },[])
 const FillData = useCallback(async()=>{
+  const test = await FetchData('http://localhost:3001/api','get')
+ // let test = await axios({ method: 'get', url: 'http://localhost:3001/api' , crossDomain: true, signal: null });
 const _data = {
   country:'us',
   category:'sports',
