@@ -10,7 +10,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
             let resp = await axios({ method: 'get', url: url + `${!isEmpty(params) ? `?${queryparams.toString()}` : ''}`, crossDomain: true, signal: controller ? controller.signal : null });
 
 
-            await awaitableTimeOut(500);
+            await awaitableTimeOut(100);
             return {
                 ...cloneDeep(resp), data: resp.data
 
@@ -28,7 +28,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
                 }
             });
 
-            await awaitableTimeOut(500);
+            await awaitableTimeOut(100);
 
             return {
                 ...cloneDeep(resp), data: resp.data
