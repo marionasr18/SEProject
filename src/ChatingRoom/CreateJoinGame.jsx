@@ -15,6 +15,7 @@ const CreateJoinGame = () => {
     fieldsName: "",
     fieldsDesc: "",
     fieldsLocation: "",
+    selected:false,
     sports: "",
     sportsOptions: [
       { value: "bas", label: "Baskteball" },
@@ -40,6 +41,14 @@ const CreateJoinGame = () => {
       };
     });
   }, []);
+const handleClick = useCallback(()=>{
+  setState(prv=>{
+    return{
+      ...prv,
+      selected:true,
+    }
+  })
+})
 
   return (
     <>
@@ -81,12 +90,12 @@ const CreateJoinGame = () => {
                     alt=""
                   />
                 </div>
-                <div className="w-full">
+                <div className="w-full" onClick={handleClick}>
                   <div className="text-lg font-semibold">Luis1994</div>
                   <span className="text-gray-500">Pick me at 9:00 Am</span>
                 </div>
               </div>
-              <div className="flex flex-row py-4 px-2 items-center border-b-2">
+              <div className={!state.selected?"flex flex-row py-4 px-2 items-center border-b-2 ":' flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400'}>
                 <div className="w-1/4">
                   <img
                     src="https://source.unsplash.com/otT2199XwI8/600x600"

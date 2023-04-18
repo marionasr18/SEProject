@@ -44,13 +44,17 @@ const params = {
    
 }
 setIsLoading(prv => prv + 1);
-        let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params);
-
+debugger
+        let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params).
+        catch(error => {
+            throw error
+        })
+ setIsLoading(prv => prv - 1)
 console.log(userData)
         // const userData = users.find((user) => user.username === uname);
 
         // Compare user info
-        setIsLoading(prv => prv - 1)
+       
 
         if (userData) {
             setRole(userData)
@@ -87,11 +91,11 @@ console.log(userData)
                     </h1>
                     <form className="space-y-4 md:space-y-6" action="#">
                         <div>
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                             <input className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={uname} type="text" name="inputName" onChange={handleChangeNm} />
                         </div>
                         <div>
-                            <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                            <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                             <input className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={pass} type="password" name="inputPass" onChange={handleChangePs} />
                         </div>
                         {/* <div className="flex items-center justify-between">
