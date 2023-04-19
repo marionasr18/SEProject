@@ -45,36 +45,37 @@ const params = {
 }
 setIsLoading(prv => prv + 1);
 debugger
-        let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params).
-        catch(error => {
-            throw error
-        })
+         let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params).
+         catch(error => {
+             throw error
+         })
+
  setIsLoading(prv => prv - 1)
-console.log(userData)
+
         // const userData = users.find((user) => user.username === uname);
 
         // Compare user info
        
 
-        if (userData) {
-            setRole(userData)
-            if (userData.data.success === 0) {
-                // Invalid password
-                alert("Invalid Username or Password")
-            } else if (userData.data.success === 1) {
-                
+         if (userData) {
+             setRole(userData)
+             if (userData.data.success === 0) {
+                 // Invalid password
+                 alert("Invalid Username or Password")
+             } else if (userData.data.success === 1) {
               
-                    localStorage.setItem('auth',userData.data.token)
-                    sessionStorage.setItem("item_key",uname);
-                    nav("/profile", { replace: true })
+            
+                     sessionStorage.setItem('auth',userData.data.token)
+                    localStorage.setItem("item_key",uname);
+                     nav("/profile", { replace: true })
 
 
 
-            }
-        } else {
-            // Username not found
-            alert("Invalid Username or Password")
-        }
+             }
+         } else {
+             // Username not found
+             alert("Invalid Username or Password")
+         }
     }
     const handleSignUp = useCallback(() => {
         nav('/signUp')
