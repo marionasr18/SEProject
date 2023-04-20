@@ -94,7 +94,7 @@ export default function SignUp() {
  const data = await FetchData('http://localhost:3001/api/users/createUser','post',params)
  if(data.success===1){
     alert('Sign Up succesfully. please return to Login Page')
-    nav('/login')
+    // nav('/login')
  }
     },[state])
     // const handlePassConfirm = useCallback(
@@ -182,7 +182,7 @@ export default function SignUp() {
                         </div>
                         <div className="col-1">Date of Birth</div>
                         <div className="col-2 ">
-                            <input type="number" className="form-control " value={state.dob} name="dob" onChange={handleChange} ></input>
+                            <input type="text" className="form-control " value={state.dob} name="dob" onChange={handleChange} ></input>
                         </div>
                     </div>
                     <div className="row mt-2">
