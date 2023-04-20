@@ -13,7 +13,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
             crossDomain: true, signal: controller ? controller.signal : null,headers:{'Authorization':auth} });
 
 
-            await awaitableTimeOut(500);
+            await awaitableTimeOut(100);
             return {
                 ...cloneDeep(resp), data: resp.data
 
@@ -32,7 +32,7 @@ export async function FetchData(url, Type, params = null, datafilterfunction = (
                 }
             });
 
-            await awaitableTimeOut(500);
+            await awaitableTimeOut(100);
 
             return {
                 ...cloneDeep(resp), data: resp.data
