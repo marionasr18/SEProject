@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 function NavigationBar() {
   const nav = useNavigate();
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState(true)
   const handleLogout = () => {
     localStorage.removeItem('auth')
     sessionStorage.removeItem('item_key');
@@ -30,19 +30,19 @@ function NavigationBar() {
           <a href="/profile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
             <span className='lead'>Home </span>
           </a>
-          <a href="/friends" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
+          {!user && <a href="/friends" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
             <span className='lead'>Friends  </span>
-          </a>
+          </a>}
           <a href="/event" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Games</span>
           </a>
-          <a href="editProfile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          {!user && <a href="editProfile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Profile</span>
-          </a>
-          {user && <> <a href="/sportsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          </a>}
+          {user && <> <a href="/sportsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
             <span className='lead'>Sport Definition</span>
           </a>
-            <a href="/fieldsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+            <a href="/fieldsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
               <span className='lead'>Fields Definition</span>
             </a></>}
         </div>

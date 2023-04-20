@@ -37,7 +37,17 @@ const SportsDefinition = () => {
     const handleBack = useCallback(() => {
         nav(-1)
     }, [])
-
+    const handleSave = useCallback (async()=>{
+let objToSave = {
+    sports_Id :state.sportsCode,
+    sportsDesc :state.sportsDesc,
+}
+const data = await FetchData('http://localhost:3001/api/sports/createSport','post',objToSave)
+if(data.success===1){
+   alert('Sign Up succesfully. please return to Login Page')
+   // nav('/login')
+}
+    },[])
     return (
         <>
          <NavigationBar/>
@@ -73,7 +83,7 @@ const SportsDefinition = () => {
             <div className="row mt-5">
           
             <button type="button" className="btn btn-warning offset-7 col-1"style={{ backgroundColor: 'yellow', color: 'black' }}>Undo</button>
-            <button type="button" className="btn btn-success col-1 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>Save</button>
+            <button type="button" onClick={handleSave} className="btn btn-success col-1 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>Save</button>
 
             </div>
             </div>
