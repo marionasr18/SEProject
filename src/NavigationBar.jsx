@@ -9,8 +9,8 @@ function NavigationBar() {
   const nav = useNavigate();
   const [user, setUser] = useState(false)
   const handleLogout = () => {
-    sessionStorage.removeItem('auth')
-localStorage.removeItem('item_key');
+   sessionStorage .removeItem('auth')
+  localStorage  .removeItem('item_key');
 
     nav("/", { replace: true })
   }

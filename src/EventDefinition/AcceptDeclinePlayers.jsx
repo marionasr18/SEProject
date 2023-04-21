@@ -1,65 +1,39 @@
 import React, { useState } from 'react';
 import './AcceptDeclinePlayers.css';
-const events = [
-    { id: 1, name: 'Event 1' },
-    { id: 2, name: 'Event 2' },
-    { id: 3, name: 'Event 3' },
-    { id: 4, name: 'Event 4' },
-    { id: 5, name: 'Event 5' },
-  ];
+const requests = [
+  { name: "John", message: "Hey, can you help me move this weekend?" },
+  { name: "Alice", message: "Do you want to grab lunch next week?" },
+  { name: "Bob", message: "Can you review my code and give me feedback?" },
+];
 const AcceptDeclinePlayers = ({ event, onSwipe }) => {
-  const [position, setPosition] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(null);
-  const [currentX, setCurrentX] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [acceptedRequests, setAcceptedRequests] = useState([]);
+  const [declinedRequests, setDeclinedRequests] = useState([]);
 
-  const handleSwipe = (accepted) => {
-    if (accepted) {
-      onSwipe('right');
-    } else {
-      onSwipe('left');
-    }
-    setPosition(0);
+  const acceptRequest = () => {
+    const currentRequest = requests[currentIndex];
+    setAcceptedRequests([...acceptedRequests, currentRequest]);
+    setCurrentIndex(currentIndex + 1);
   };
 
-  const handleStart = (e) => {
-    setIsDragging(true);
-    setStartX(e.touches[0].clientX);
+  const declineRequest = () => {
+    const currentRequest = requests[currentIndex];
+    setDeclinedRequests([...declinedRequests, currentRequest]);
+    setCurrentIndex(currentIndex + 1);
   };
 
-  const handleMove = (e) => {
-    if (!isDragging) {
-      return;
-    }
+  const currentRequest = requests[currentIndex];
 
-    setCurrentX(e.touches[0].clientX);
-    setPosition(currentX - startX);
-  };
-
-  const handleEnd = () => {
-    setIsDragging(false);
-    if (position > 100) {
-      handleSwipe(true);
-    } else if (position < -100) {
-      handleSwipe(false);
-    } else {
-      setPosition(0);
-    }
-  };
+  if (!currentRequest) {
+    return <p>No more requests!</p>;
+  }
 
   return (
-    <div
-      className="swipeable-card"
-      onTouchStart={handleStart}
-      onTouchMove={handleMove}
-      onTouchEnd={handleEnd}
-      style={{ transform: `translateX(${position}px)` }}
-    >
-      <div className="card-content">
-        <h3>{events.name}</h3>
-        {/* <img src={events.image} alt={events.name} /> */}
-        {events.name}        <p>{events.id}</p>
-      </div>
+    <div>
+      <h2>Request from {currentRequest.name}</h2>
+      <p>{currentRequest.message}</p>
+      <button onClick={acceptRequest}>Accept</button>
+      <button onClick={declineRequest}>Decline</button>
     </div>
   );
 };
