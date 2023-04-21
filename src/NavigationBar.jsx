@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 function NavigationBar() {
   const nav = useNavigate();
-  const [user, setUser] = useState(true)
+  const [user, setUser] = useState(false)
   const handleLogout = () => {
-    localStorage.removeItem('auth')
-    sessionStorage.removeItem('item_key');
+    sessionStorage.removeItem('auth')
+localStorage.removeItem('item_key');
 
     nav("/", { replace: true })
   }

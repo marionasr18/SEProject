@@ -10,7 +10,7 @@ export function Auth() {
         if (location.pathname === "signUp") {
             navigate('/signUp', { replace: true })
         }
-        else if (!localStorage.getItem('auth')) {
+        else if (!sessionStorage.getItem('auth')) {
             navigate('/login', { replace: true })
         }
         else {
