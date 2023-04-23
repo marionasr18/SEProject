@@ -1,41 +1,77 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './AcceptDeclinePlayers.css';
-const requests = [
-  { name: "John", message: "Hey, can you help me move this weekend?" },
-  { name: "Alice", message: "Do you want to grab lunch next week?" },
-  { name: "Bob", message: "Can you review my code and give me feedback?" },
-];
+import { FetchData } from '../functions';
+
 const AcceptDeclinePlayers = ({ event, onSwipe }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [acceptedRequests, setAcceptedRequests] = useState([]);
-  const [declinedRequests, setDeclinedRequests] = useState([]);
-
-  const acceptRequest = () => {
-    const currentRequest = requests[currentIndex];
-    setAcceptedRequests([...acceptedRequests, currentRequest]);
-    setCurrentIndex(currentIndex + 1);
+  const [stateView, setStateView] = useState(false)
+  const [state, setState] = useState({
+    eventsData: [],
+    requestsData: [],
+  })
+  const FillData = useCallback(async () => {
+    let token = sessionStorage.getItem('auth')
+    let data = await FetchData(`http://localhost:3001/api/events/getAllCreatedEvents/${token}`, 'get')
+    let finaldata = data.data
+    if (finaldata.success === 1)
+      setState(prv => {
+        return {
+          ...prv,
+          eventsData: finaldata.data
+        }
+      })
+   
+  }, [])
+  useEffect(() => {
+    FillData()
+  }, [])
+  const handleLearnMore = async(e) => {
+    setStateView(true)
+    let token = sessionStorage.getItem('auth')
+    let data = await FetchData(`http://localhost:3001/api/events/getRequestByEventId/${e}`, 'get')
+    let finaldata = data.data
+    if (finaldata.success === 1)
+      setState(prv => {
+        return {
+          ...prv,
+          requestsData: finaldata.data
+        }
+      })
   };
+const drawRequestList = useCallback(()=>{
+return state.requestsData.map(e=>{
+  return(<p> {e.username}</p>)
+})
 
+},[state.requestsData])
   const declineRequest = () => {
-    const currentRequest = requests[currentIndex];
-    setDeclinedRequests([...declinedRequests, currentRequest]);
+
     setCurrentIndex(currentIndex + 1);
   };
 
-  const currentRequest = requests[currentIndex];
+  const currentRequest = state.eventsData[currentIndex];
 
   if (!currentRequest) {
     return <p>No more requests!</p>;
   }
 
-  return (
-    <div>
-      <h2>Request from {currentRequest.name}</h2>
-      <p>{currentRequest.message}</p>
-      <button onClick={acceptRequest}>Accept</button>
-      <button onClick={declineRequest}>Decline</button>
-    </div>
-  );
+  return (<>
+    <div className='offset-4'>
+      <h2>Sport {currentRequest.sport_name}</h2>
+      The game will be played {currentRequest.event_location} at field {currentRequest.field_name}
+      <p>{(currentRequest.event_date)}</p> 
+      <div className='row'>
+        <div className='col-4'>
+          <button onClick={(e) => handleLearnMore(currentRequest.event_id)}>Learn more</button></div>
+        <div className='col-5'>
+          <button onClick={declineRequest}>View Next</button></div>
+      </div></div>
+      <div className='row mt-2'>
+{stateView&&drawRequestList()}
+
+
+      </div>
+ </> );
 };
 
 export default AcceptDeclinePlayers;

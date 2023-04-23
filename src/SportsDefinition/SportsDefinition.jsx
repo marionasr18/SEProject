@@ -23,7 +23,6 @@ const SportsDefinition = () => {
     }
     const [state, setState] = useState(STATE)
     const FillData = useCallback(async () => {
-        debugger
         let data = await FetchData('http://localhost:3001/api/sports/getAllSports', 'get')
         let finaldata = data.data
         if (finaldata.success === 1)

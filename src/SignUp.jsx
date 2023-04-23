@@ -42,12 +42,29 @@ export default function SignUp() {
 
     const [state, setState] = useState(STATE)
     const FillData = useCallback(async () => {
-        let data = await FetchData('DataFiles/PlayersData.json', 'get')
+        let token = sessionStorage.getItem('auth');
+
+        let data = await FetchData(`http://localhost:3001/api/users/${token}`, 'get')
+        let finalData = data.data
+        setState(prv => {
+            return {
+                ...prv,
+                email: finalData.data.email,
+                // imgUrl: '',
+                username: finalData.data.username,
+                sex: finalData.data.gender,
+                phoneNb: finalData.data.phoneNumber,
+                dob: finalData.data.dob,
+            }
+        })
+
         console.log(data.data)
     }, [])
     useEffect(() => {
-        FillData()
-    }, [])
+        if (loc.pathname === '/editProfile') {
+            FillData()
+        }
+    }, [loc])
     const handleChange = useCallback((e) => {
         setState(prv => {
             return {
@@ -79,24 +96,23 @@ export default function SignUp() {
 
         nav(-1)
     }, [])
-    const handleSaveUser=useCallback(async()=>{
+    const handleSaveUser = useCallback(async () => {
         let params = {
-           username:state.username,
-           email:state.email,
-           dob:state.dob,
-           address:state.address,
-           password:state.password,
-           gender:'M',
-           phoneNumber :state.phoneNb,
+            username: state.username,
+            email: state.email,
+            dob: state.dob,
+            address: state.address,
+            password: state.password,
+            gender: 'M',
+            phoneNumber: state.phoneNb,
         }
-        debugger
         console.log(params)
- const data = await FetchData('http://localhost:3001/api/users/createUser','post',params)
- if(data.success===1){
-    alert('Sign Up succesfully. please return to Login Page')
-    // nav('/login')
- }
-    },[state])
+        const data = await FetchData('http://localhost:3001/api/users/createUser', 'post', params)
+        if (data.success === 1) {
+            alert('Sign Up succesfully. please return to Login Page')
+            // nav('/login')
+        }
+    }, [state])
     // const handlePassConfirm = useCallback(
     //     (e) => {
 
@@ -143,26 +159,26 @@ export default function SignUp() {
                             <button className="btn btn-danger" onClick={handleBack}>Back</button>
                         </div>
                     </div>
-                            <div className="row mt-3">
-                                <div className="col-3">Username</div>
-                                <div className="col-5">
-                                    <input type="text" className="form-control" value={state.username} name="username" onChange={handleChange} />
-                                </div>
-                            </div>
-                             <div className="row mt-2">
-                                <div className="col-3 required">Email</div>
-                                <div className="col-5">
-                                    <input type="text" className="form-control " value={state.email} name="email" onChange={handleChange} />
-                                </div>
-                            </div> 
-                            <div className="row mt-2">
-                                <div className="col-3">Password</div>
-                                <div className="col-5 ">
-                                    <input type="password" className="form-control " value={state.password} name="password" onChange={handleChange} ></input>
-                                </div>
-                            </div>
-                          
-                         
+                    <div className="row mt-3">
+                        <div className="col-3">Username</div>
+                        <div className="col-5">
+                            <input type="text" className="form-control" value={state.username} name="username" onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div className="row mt-2">
+                        <div className="col-3 required">Email</div>
+                        <div className="col-5">
+                            <input type="text" className="form-control " value={state.email} name="email" onChange={handleChange} />
+                        </div>
+                    </div>
+                    <div className="row mt-2">
+                        <div className="col-3">Password</div>
+                        <div className="col-5 ">
+                            <input type="password" className="form-control " value={state.password} name="password" onChange={handleChange} ></input>
+                        </div>
+                    </div>
+
+
                     <div className="row mt-2">
                         <div className="col-3">Password Confirmation</div>
                         <div className="col-5 ">
@@ -186,31 +202,33 @@ export default function SignUp() {
                         </div>
                     </div>
                     <div className="row mt-2">
-                                <div className="col-3">Phone Number</div>
-                                <div className="col-5 ">
-                                    <input type="number" className="form-control " value={state.phoneNb} name="phoneNb" onChange={handleChange} ></input>
-                                </div>
-                            </div>
+                        <div className="col-3">Phone Number</div>
+                        <div className="col-5 ">
+                            <input type="number" className="form-control " value={state.phoneNb} name="phoneNb" onChange={handleChange} ></input>
+                        </div>
+                    </div>
                     <div className="row mt-2">
                         <div className="col-3">Sports</div>
                         <div className="col-5">
                             <Select
                                 defaultValue={state.sports}
-                                onChange={(e)=>{setState(prv=>{
-                                    return{
-                                        ...prv,
-                                        sports:e.value
-                                    }
-                                })}}                          
-                                      options={state.sportsOptions}
+                                onChange={(e) => {
+                                    setState(prv => {
+                                        return {
+                                            ...prv,
+                                            sports: e.value
+                                        }
+                                    })
+                                }}
+                                options={state.sportsOptions}
                             />
                         </div>
                     </div>
-                   <div className='row'>
-                   <div className=" ui small image">
-                    <FileDialogue imgUrl={state.imgUrl} onUpload={onUpld} />
-                </div>
-                   </div>
+                    <div className='row'>
+                        <div className=" ui small image">
+                            <FileDialogue imgUrl={state.imgUrl} onUpload={onUpld} />
+                        </div>
+                    </div>
 
                     {loc.pathname === '/editProfile' && <div className="row mt-5">
 

@@ -80,7 +80,7 @@ const FieldDefinition = () => {
         const data = await FetchData('http://localhost:3001/api/fields/createField', 'post', objToSave)
         if (data.data.success === 1) {
             setState(STATE)
-            alert('Sports added succesfully.')
+            alert('Event added succesfully.')
             FillData()
             // nav('/login')
         }

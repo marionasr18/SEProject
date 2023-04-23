@@ -44,7 +44,6 @@ const params = {
    
 }
 setIsLoading(prv => prv + 1);
-debugger
          let userData = await FetchData("http://localhost:3001/api/users/login", 'post',params).
          catch(error => {
              throw error

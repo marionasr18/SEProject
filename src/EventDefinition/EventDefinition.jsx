@@ -19,16 +19,14 @@ const EventDefinition = () => {
     const nav = useNavigate();
 
     const STATE = {
-        fieldsCode: '',
-        fieldsName: '',
-        fieldsDesc: '',
-        fieldsLocation: '',
-        sports: '',
+        capacity: '',
+        eventName: '',
+        location: '',
+        field: '',
         tabid: 1,
-        sportsOptions: [{ value: 'bas', label: 'Baskteball' },
-        { value: 'voll', label: 'Volley Ball' },
-        { value: 'fut', label: 'Futsal' },
-        { value: 'foot', label: 'Foot Ball' },],
+        sportsOptions: [],
+        fieldOptions: [],
+        requestToJoinData: [],
     }
 
     const [state, setState] = useState(STATE)
@@ -37,19 +35,50 @@ const EventDefinition = () => {
     const [endtTime, setEndtTime] = useState('10:00');
 
     const FillData = useCallback(async () => {
-        let data = await FetchData('DataFiles/PlayersData.json', 'get')
-        console.log(data.data)
-        setState(prv=>{
-            return{
-                ...prv,
-                eventArray : data.data
-            }
-        })
-    }, [])
+        let token = sessionStorage.getItem('auth')
+        let data = await FetchData('http://localhost:3001/api/fields/getAllFields', 'get')
+        let finaldata = data.data
+        if (finaldata.success === 1)
+            setState(prv => {
+                return {
+                    ...prv,
+                    fieldOptions: finaldata.data.map(e => {
+                        return {
+                            value: e.field_id,
+                            label: e.field_name,
+                        }
+                    })
+                }
+            })
+        let data2 = await FetchData('http://localhost:3001/api/sports/getAllSports', 'get')
+        let finaldata2 = data2.data
+        if (finaldata2.success === 1)
+            setState(prv => {
+                return {
+                    ...prv,
+                    sportsOptions: finaldata2.data.map(e => {
+                        return {
+                            value: e.sport_id,
+                            label: e.sport_name,
+                        }
+                    })
+                }
+            })
+        if (state.tabid === 2) {
+            let data3 = await FetchData(`http://localhost:3001/api/events/getEventToJoinById/${token}`, 'get')
+            let finaldata3 = data3.data
+            if (finaldata3.success === 1)
+                setState(prv => {
+                    return {
+                        ...prv,
+                        requestToJoinData: finaldata3.data
+                    }
+                })
+        }
+    }, [state.tabid])
     useEffect(() => {
         FillData()
-    }, [])
-    console.log(state)
+    }, [state.tabid])
     const handleChange = useCallback((e) => {
         setState(prv => {
             return {
@@ -66,35 +95,181 @@ const EventDefinition = () => {
             }
         })
     }, [])
+    const handleRequestToJoin = useCallback(async(e) => {
+        debugger
+        let token = sessionStorage.getItem('auth')
+        const _data = {
+            event_id:e.event_id,
+user_id : token,
+        }
+        let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post',_data)
+        let finaldata = data.data
+        if (finaldata.success === 1)
+            alert('Request Sent')
+                
+            
+    }, [])
     const drawGamesToJoin = useCallback(() => {
-        state.eventArray?.map(e=>{
+        console.log(state.requestToJoinData)
+        let arr = state.requestToJoinData
+        // arr= [ {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // {
+        //     "event_id": 2,
+        //     "event_name": "Soccer Game",
+        //     "event_date": "2023-05-01",
+        //     "event_location": "Central Park",
+        //     "event_description": "Come join us for a fun game of soccer!",
+        //     "sport_name": "Football",
+        //     "field_name": "Field A",
+        //     "created_by": "marioTest"
+        // },
+        // ]
+       return arr.map(e => {
             return (<>
-                <div className="shadow-card flex flex-col rounded-xl bg-white bg-clip-border">
-                    <div className="mx-4 -mt-6 translate-y-0">
-                            <img
-                                // className=""
-                                src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
-                                alt="card image"
-                            />
-                    </div>
-                    <div className="text-secondary flex-1 p-6">
-                            <h4 className="font-medium">Material Tailwind</h4>
-                        <p className="opcacity-60 mb-3">
-                            Game 1
-                        </p>
-                        <button
-                            className="middle none center rounded-lg bg-pink-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                            data-ripple-light="true"
-                        >
-    Request to Join Game                    </button>
+            <div className="col-3">
+                <div className="flex flex-col rounded-xl bg-white bg-transparent bg-clip-border shadow-none">
+                    <div className="flex">
+                        <div className="text-secondary flex-1 p-6">
+                            <span className="font-bold uppercase text-blue-500">{e.event_name}</span>
+                            <p className="mb-5 opacity-80">
+                               {e.event_description}
+                               At {e.event_location}, {e.field_name}
+                                by <span className="font-bold">{e.created_by}</span>, {e.event_date}
+                            </p>
+                            <div><button className="btn-success" onClick={()=>handleRequestToJoin(e)}>Request To Join</button></div>
+                        </div>
+                        
                     </div>
                 </div>
-                </> )
+                </div>
+            </>)
         })
-        
 
-    }, [state.eventArray])
 
+    }, [state.requestToJoinData, state.tabid])
+
+    const handleCreateGame = useCallback(async () => {
+        let token = sessionStorage.getItem('auth');
+
+        let objToSave = {
+            event_name: state.eventName,
+            event_date: dateOfEvent,
+            event_location: state.location,
+            event_description: state.desc,
+            user_id: token,
+            sport_id: state.sports,
+            field_id: state.field,
+            start_time: startTime,
+            end_time: endtTime,
+            capacity: state.capacity,
+        }
+        const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
+        if (data.data.success === 1) {
+            setState(STATE)
+            alert('EVENT added succesfully.')
+            FillData()
+            // nav('/login')
+        }
+    }, [state])
     return (
         <>
             <NavigationBar />
@@ -120,6 +295,22 @@ const EventDefinition = () => {
                 state.tabid === 1 &&
                 <>
                     <div className="row mt-2 ml-2">
+                        <div className="col-1 offset-9"><button className="btn-success" onClick={handleCreateGame}>Create Game</button></div>
+
+                    </div>
+                    <div className="row mt-2 ml-2">
+                        <div className="col-2 required">Event Name</div>
+                        <div className="col-4">
+                            <input type="text" className="form-control  " value={state.eventName} name="eventName" onChange={handleChange} ></input>
+                        </div>
+                    </div>
+                    <div className="row mt-2 ml-2">
+                        <div className="col-2 required">Event Description</div>
+                        <div className="col-4">
+                            <input type="text" className="form-control  " value={state.eventDesc} name="eventDesc" onChange={handleChange} ></input>
+                        </div>
+                    </div>
+                    <div className="row mt-2 ml-2">
                         <div className="col-2">Select Sport to play</div>
                         <div className="col-3">
                             <Select
@@ -136,10 +327,11 @@ const EventDefinition = () => {
                             />
                         </div>
                     </div>
+
                     <div className="row mt-2 ml-2">
                         <div className="col-2">Select Capacity</div>
                         <div className="col-4">
-                            <input type="text" className="form-control  " value={state.capacity} name="capacity" onChange={handleChange} ></input>
+                            <input type="number" className="form-control  " value={state.capacity} name="capacity" onChange={handleChange} ></input>
                         </div>
                     </div>
                     <div className="row mt-2 ml-2">
@@ -151,18 +343,18 @@ const EventDefinition = () => {
                     <div className="row mt-2 ml-2">
                         <div className="col-2">Field</div>
                         <div className="col-4">
-                        <Select
-                                defaultValue={state.sports}
+                            <Select
+                                defaultValue={state.field}
                                 onChange={e => {
                                     setState(prv => {
                                         return {
                                             ...prv,
-                                            sports: e.value
+                                            field: e.value
                                         }
                                     })
                                 }}
-                                options={state.sportsOptions}
-                            /> 
+                                options={state.fieldOptions}
+                            />
                         </div>
                     </div>
                     <div className="row mt-2 ml-2">
@@ -188,12 +380,12 @@ const EventDefinition = () => {
             }
             {
                 state.tabid === 2 &&
-                <div className="row ml-2 mt-3 ">{drawGamesToJoin() } </div>
+                <div className="row ml-2 mt-3 ">{drawGamesToJoin()} </div>
 
             }
             {
-                state.tabid ===3 &&
-                <div className="row ml-2 mt-3 "><AcceptDeclinePlayers/> </div>
+                state.tabid === 3 &&
+                <div className="row ml-2 mt-3 "><AcceptDeclinePlayers /> </div>
 
             }
         </>
