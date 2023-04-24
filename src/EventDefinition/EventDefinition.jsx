@@ -12,10 +12,15 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import AcceptDeclinePlayers from "./AcceptDeclinePlayers";
-
+import { Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 
 const EventDefinition = () => {
-
+    const NavArray = [
+        { tabId: 1, label: "Create New Game" },
+        { tabId: 2, label: "Join Game" },
+        { tabId: 3, label: "View Created Games" },
+        { tabId: 4, label: "View Pending Requests" },
+    ]
     const nav = useNavigate();
 
     const STATE = {
@@ -23,7 +28,7 @@ const EventDefinition = () => {
         eventName: '',
         location: '',
         field: '',
-        tabid: 1,
+        tabId: 1,
         sportsOptions: [],
         fieldOptions: [],
         requestToJoinData: [],
@@ -64,7 +69,7 @@ const EventDefinition = () => {
                     })
                 }
             })
-        if (state.tabid === 2) {
+        if (state.tabId === 2) {
             let data3 = await FetchData(`http://localhost:3001/api/events/getEventToJoinById/${token}`, 'get')
             let finaldata3 = data3.data
             if (finaldata3.success === 1)
@@ -75,10 +80,10 @@ const EventDefinition = () => {
                     }
                 })
         }
-    }, [state.tabid])
+    }, [state.tabId])
     useEffect(() => {
         FillData()
-    }, [state.tabid])
+    }, [state.tabId])
     const handleChange = useCallback((e) => {
         setState(prv => {
             return {
@@ -91,23 +96,23 @@ const EventDefinition = () => {
         setState((prv) => {
             return {
                 ...prv,
-                tabid: id
+                tabId: id
             }
         })
     }, [])
-    const handleRequestToJoin = useCallback(async(e) => {
+    const handleRequestToJoin = useCallback(async (e) => {
         debugger
         let token = sessionStorage.getItem('auth')
         const _data = {
-            event_id:e.event_id,
-user_id : token,
+            event_id: e.event_id,
+            user_id: token,
         }
-        let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post',_data)
+        let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post', _data)
         let finaldata = data.data
         if (finaldata.success === 1)
             alert('Request Sent')
-                
-            
+
+
     }, [])
     const drawGamesToJoin = useCallback(() => {
         console.log(state.requestToJoinData)
@@ -223,30 +228,37 @@ user_id : token,
         //     "created_by": "marioTest"
         // },
         // ]
-       return arr.map(e => {
+        return arr.map(e => {
             return (<>
-            <div className="col-3">
-                <div className="flex flex-col rounded-xl bg-white bg-transparent bg-clip-border shadow-none">
-                    <div className="flex">
-                        <div className="text-secondary flex-1 p-6">
-                            <span className="font-bold uppercase text-blue-500">{e.event_name}</span>
-                            <p className="mb-5 opacity-80">
-                               {e.event_description}
-                               At {e.event_location}, {e.field_name}
-                                by <span className="font-bold">{e.created_by}</span>, {e.event_date}
-                            </p>
-                            <div><button className="btn-success" onClick={()=>handleRequestToJoin(e)}>Request To Join</button></div>
-                        </div>
-                        
+                <div className="card" style={{ width: "18rem" }}>
+                    <div className="card-body">
+                        <h5 className="card-title">{e.event_name}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">by {e.created_by} at {e.event_location}</h6>
+                        <p className="card-text">Field Name : {e.field_name}</p>
+                        <p className="card-text">{e.event_description}</p>
+                        <a className="card-link">Starts At: {e.start_time}</a>
+                        <a className="card-link">Ends At: {e.end_time}</a>
+                        <div><button onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
                     </div>
                 </div>
-                </div>
+
             </>)
         })
 
 
-    }, [state.requestToJoinData, state.tabid])
-
+    }, [state.requestToJoinData, state.tabId])
+    
+    const drawNav = () => {
+        return NavArray.map((eachNav, key) => {
+            return <NavItem key={key}>
+                <NavLink className={state.tabId == eachNav.tabId ? 'active' : ''} onClick={()=>toggleNav(eachNav.tabId)}>
+                    <span className="callout m-0 py-h text-muted text-center bg-faded text-uppercase">
+                        {eachNav.label}
+                    </span>
+                </NavLink>
+            </NavItem>
+        })
+    }
     const handleCreateGame = useCallback(async () => {
         let token = sessionStorage.getItem('auth');
 
@@ -273,31 +285,13 @@ user_id : token,
     return (
         <>
             <NavigationBar />
-            <div className="row">
-                <div className="col-8 offset-4">
-                    <nav className="navbar navbar-expand-lg navbar-light">
-                        <ul className="navbar-nav">
-                            <li className={state.tabid === 1 ? "nav-item active" : "nav-item"}>
-                                <a className={state.tabid === 1 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(1)}>Create New Game <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className={state.tabid === 2 ? "nav-item active" : "nav-item"}>
-                                <a className={state.tabid === 2 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(2)}>Join Game <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className={state.tabid === 3 ? "nav-item active" : "nav-item"}>
-                                <a className={state.tabid === 3 ? "nav-link text-danger" : "nav-link"} onClick={() => toggleNav(3)}>View Created Game <span className="sr-only">(current)</span></a>
-                            </li>
-
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            {
-                state.tabid === 1 &&
+            <Nav tabs className='mt-4'>
+                {drawNav()}
+            </Nav>
+            <TabContent activeTab={state.tabId}>
+                <TabPane tabId={1}>
                 <>
-                    <div className="row mt-2 ml-2">
-                        <div className="col-1 offset-9"><button className="btn-success" onClick={handleCreateGame}>Create Game</button></div>
-
-                    </div>
+                   
                     <div className="row mt-2 ml-2">
                         <div className="col-2 required">Event Name</div>
                         <div className="col-4">
@@ -375,19 +369,23 @@ user_id : token,
                                 onChange={setEndtTime} value={endtTime} />
                         </div>
                     </div>
+                    <div className="row mt-2 ml-2">
+                        <div className="col-1 offset-9"><button className="btn-danger" onClick={handleCreateGame}>Create Game</button></div>
+
+                    </div>
                 </>
 
-            }
-            {
-                state.tabid === 2 &&
+                </TabPane>
+                <TabPane tabId={2}>
                 <div className="row ml-2 mt-3 ">{drawGamesToJoin()} </div>
+                </TabPane>
+                <TabPane tabId={3}>
+                <div className="row ml-2 mt-3 "><AcceptDeclinePlayers /> </div>       
+                 </TabPane>
 
-            }
-            {
-                state.tabid === 3 &&
-                <div className="row ml-2 mt-3 "><AcceptDeclinePlayers /> </div>
-
-            }
+            </TabContent>
+           
+           
         </>
     )
 }

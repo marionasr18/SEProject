@@ -15,6 +15,7 @@ import EventDefinition from "./EventDefinition/EventDefinition";
 import Friends from "./FriendsDefinition/Friends";
 import FriendsDefinition from "./FriendsDefinition/FriendsDefinition";
 import CreateJoinGame from "./ChatingRoom/CreateJoinGame";
+import ProfileFacebook from "./ProfileFacebook";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
             <Route path='/event'><Route index element={<EventDefinition />} /></Route>
             <Route path='/event2'><Route index element={<CreateJoinGame />} /></Route>
+            <Route path='/event3'><Route index element={<ProfileFacebook />} /></Route>
          
 
         </Route>

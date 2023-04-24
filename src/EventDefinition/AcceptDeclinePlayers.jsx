@@ -20,14 +20,13 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
           eventsData: finaldata.data
         }
       })
-   
+
   }, [])
   useEffect(() => {
     FillData()
   }, [])
-  const handleLearnMore = async(e) => {
+  const handleLearnMore = async (e) => {
     setStateView(true)
-    let token = sessionStorage.getItem('auth')
     let data = await FetchData(`http://localhost:3001/api/events/getRequestByEventId/${e}`, 'get')
     let finaldata = data.data
     if (finaldata.success === 1)
@@ -38,12 +37,12 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
         }
       })
   };
-const drawRequestList = useCallback(()=>{
-return state.requestsData.map(e=>{
-  return(<p> {e.username}</p>)
-})
+  const drawRequestList = useCallback(() => {
+    return state.requestsData.map(e => {
+      return (<div> {e.username}</div>)
+    })
 
-},[state.requestsData])
+  }, [state.requestsData])
   const declineRequest = () => {
 
     setCurrentIndex(currentIndex + 1);
@@ -56,22 +55,21 @@ return state.requestsData.map(e=>{
   }
 
   return (<>
-    <div className='offset-4'>
-      <h2>Sport {currentRequest.sport_name}</h2>
-      The game will be played {currentRequest.event_location} at field {currentRequest.field_name}
-      <p>{(currentRequest.event_date)}</p> 
-      <div className='row'>
-        <div className='col-4'>
-          <button onClick={(e) => handleLearnMore(currentRequest.event_id)}>Learn more</button></div>
-        <div className='col-5'>
-          <button onClick={declineRequest}>View Next</button></div>
-      </div></div>
-      <div className='row mt-2'>
-{stateView&&drawRequestList()}
-
-
+    <div className='row '>
+      <div className='offset-4'>
+        <h2>Sport {currentRequest.sport_name}</h2>
+        The game will be played {currentRequest.event_location} at field {currentRequest.field_name}
+        <p>{(currentRequest.event_date)}</p>
+        <div className='row'>
+          <div className='col-4'>
+            <button onClick={(e) => handleLearnMore(currentRequest.event_id)}>Learn more</button></div>
+          <div className='col-5'>
+            <button onClick={declineRequest}>View Next</button></div>
+        </div>
       </div>
- </> );
+    </div>
+  
+  </>);
 };
 
 export default AcceptDeclinePlayers;
