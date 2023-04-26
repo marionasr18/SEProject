@@ -14,6 +14,7 @@ import 'react-clock/dist/Clock.css';
 import AcceptDeclinePlayers from "./AcceptDeclinePlayers";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 
+
 const EventDefinition = () => {
     const NavArray = [
         { tabId: 1, label: "Create New Game" },
@@ -101,10 +102,9 @@ const EventDefinition = () => {
         })
     }, [])
     const handleRequestToJoin = useCallback(async (e) => {
-        debugger
         let token = sessionStorage.getItem('auth')
         const _data = {
-            event_id: e.event_id,
+            event_id: e,
             user_id: token,
         }
         let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post', _data)
@@ -238,7 +238,7 @@ const EventDefinition = () => {
                         <p className="card-text">{e.event_description}</p>
                         <a className="card-link">Starts At: {e.start_time}</a>
                         <a className="card-link">Ends At: {e.end_time}</a>
-                        <div><button onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
+                        <div><button className="btn-danger" onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
                     </div>
                 </div>
 
@@ -277,7 +277,7 @@ const EventDefinition = () => {
         const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
         if (data.data.success === 1) {
             setState(STATE)
-            alert('EVENT added succesfully.')
+
             FillData()
             // nav('/login')
         }

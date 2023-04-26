@@ -8,6 +8,7 @@ import Friends from "./Friends";
 
 import { Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 import ReceivedFriendRequest from "./ReceivedFriendRequest";
+import ExploreUser from "./ExploreUser";
 
 
 
@@ -20,7 +21,7 @@ const FriendsDefinition = () => {
     }
     const [state, setState] = useState(STATE)
     const NavArray = [
-        { tabId: 1, label: "View Friend" },
+        { tabId: 1, label: "My Friend List" },
         { tabId: 2, label: "Explore" },
         { tabId: 3, label: "View Friend Requests" },
     ]
@@ -66,10 +67,9 @@ const FriendsDefinition = () => {
             <TabContent activeTab={state.tabId}>
                 <TabPane tabId={1}>
                 <Friends/>
-
-
                 </TabPane>
                 <TabPane tabId={2}>
+                    <ExploreUser/>
                 </TabPane>
                 <TabPane tabId={3}>
                 <ReceivedFriendRequest/>

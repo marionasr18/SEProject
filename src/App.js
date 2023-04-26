@@ -14,20 +14,15 @@ import FieldDefinition from "./FieldDefinition/FieldDefinition";
 import EventDefinition from "./EventDefinition/EventDefinition";
 import Friends from "./FriendsDefinition/Friends";
 import FriendsDefinition from "./FriendsDefinition/FriendsDefinition";
-import CreateJoinGame from "./ChatingRoom/CreateJoinGame";
 import ProfileFacebook from "./ProfileFacebook";
+import ChatsPage from "./ChatingRoom/ChatsPage";
 
 
 function App() {
-
-  const [ws, setWs] = useState(null);
-
   return (
     <LoadingContextWrapper>
 
       <Loading />
-
-
 
       <Routes>
         <Route path='/signUp' element={<SignUp />} />
@@ -45,7 +40,7 @@ function App() {
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
             <Route path='/event'><Route index element={<EventDefinition />} /></Route>
-            <Route path='/event2'><Route index element={<CreateJoinGame />} /></Route>
+            {/* <Route path='/event2'><Route index element={<ChatsPage />} /></Route> */}
             <Route path='/event3'><Route index element={<ProfileFacebook />} /></Route>
          
 

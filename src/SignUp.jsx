@@ -10,21 +10,9 @@ import FileDialogue from './FileDialogue';
 
 
 export default function SignUp() {
-    const data = [
-        {
-            "username": "mario",
-            "pass": "123",
-            "role": "regular"
-        },
-        {
-            "username": "omar",
-            "pass": "456",
-            "role": "admin"
-        }
-    ]
     const nav = useNavigate()
     const loc = useLocation()
-    console.log(loc)
+
     const STATE = {
         email: '',
         imgUrl: '',
@@ -42,19 +30,21 @@ export default function SignUp() {
 
     const [state, setState] = useState(STATE)
     const FillData = useCallback(async () => {
-        let token = sessionStorage.getItem('auth');
+ 
 
-        let data = await FetchData(`http://localhost:3001/api/users/${token}`, 'get')
+        let data = await FetchData(`http://localhost:3001/api/users/getUserById`, 'get')
+        debugger
+
         let finalData = data.data
         setState(prv => {
             return {
                 ...prv,
-                email: finalData.data.email,
-                // imgUrl: '',
-                username: finalData.data.username,
-                sex: finalData.data.gender,
-                phoneNb: finalData.data.phoneNumber,
-                dob: finalData.data.dob,
+                email: finalData.data[0].email,
+                imgUrl: finalData.data[0].profile_picture,
+                username: finalData.data[0].username,
+                sex: finalData.data[0].gender,
+                phoneNb: finalData.data[0].phoneNumber,
+                dob: finalData.data[0].dob,
             }
         })
 
@@ -109,8 +99,17 @@ export default function SignUp() {
         console.log(params)
         const data = await FetchData('http://localhost:3001/api/users/createUser', 'post', params)
         if (data.success === 1) {
-            alert('Sign Up succesfully. please return to Login Page')
+            console.log('username', state.username);
+        const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post',{username: state.username})
+            
+          
+            
+             alert('Sign Up succesfully. please return to Login Page')
+
             // nav('/login')
+        }
+        if (data.success === 0) {
+
         }
     }, [state])
     // const handlePassConfirm = useCallback(
