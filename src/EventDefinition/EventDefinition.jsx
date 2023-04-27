@@ -112,117 +112,117 @@ user_id : token,
     const drawGamesToJoin = useCallback(() => {
         console.log(state.requestToJoinData)
         let arr = state.requestToJoinData
-        // arr= [ {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // ]
+        arr= [ {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        {
+            "event_id": 2,
+            "event_name": "Soccer Game",
+            "event_date": "2023-05-01",
+            "event_location": "Central Park",
+            "event_description": "Come join us for a fun game of soccer!",
+            "sport_name": "Football",
+            "field_name": "Field A",
+            "created_by": "marioTest"
+        },
+        ]
        return arr.map(e => {
             return (<>
             <div className="col-3">
