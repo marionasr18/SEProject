@@ -26,14 +26,7 @@ const FriendsDefinition = () => {
         { tabId: 3, label: "View Friend Requests" },
     ]
     const FillData = useCallback(async () => {
-        let data = await FetchData('DataFiles/PlayersData.json', 'get')
-        setState(prv => {
-            return {
-                ...prv,
-                // playersList:data.data,
-                playersListNotFiltered: data.data,
-            }
-        })
+      
     }, [])
     useEffect(() => {
         FillData()

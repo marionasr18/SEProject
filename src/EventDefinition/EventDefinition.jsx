@@ -13,6 +13,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import AcceptDeclinePlayers from "./AcceptDeclinePlayers";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
+import SeeUserRequest from "./SeeUserRequest";
 
 
 const EventDefinition = () => {
@@ -109,135 +110,25 @@ const EventDefinition = () => {
         }
         let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post', _data)
         let finaldata = data.data
-        if (finaldata.success === 1)
+        if (finaldata.success === 1){
             alert('Request Sent')
-
-
+FillData()
+}
     }, [])
     const drawGamesToJoin = useCallback(() => {
         console.log(state.requestToJoinData)
         let arr = state.requestToJoinData
-        // arr= [ {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // {
-        //     "event_id": 2,
-        //     "event_name": "Soccer Game",
-        //     "event_date": "2023-05-01",
-        //     "event_location": "Central Park",
-        //     "event_description": "Come join us for a fun game of soccer!",
-        //     "sport_name": "Football",
-        //     "field_name": "Field A",
-        //     "created_by": "marioTest"
-        // },
-        // ]
+        
         return arr.map(e => {
             return (<>
-                <div className="card" style={{ width: "18rem" }}>
+                <div className="card col-3 ml-2" style={{ width: "18rem" }}>
                     <div className="card-body">
                         <h5 className="card-title">{e.event_name}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">by {e.created_by} at {e.event_location}</h6>
                         <p className="card-text">Field Name : {e.field_name}</p>
                         <p className="card-text">{e.event_description}</p>
-                        <a className="card-link">Starts At: {e.start_time}</a>
-                        <a className="card-link">Ends At: {e.end_time}</a>
+                        <span className="card-link">Starts At: {e.start_time}</span>
+                        <span className="card-link">Ends At: {e.end_time}</span>
                         <div><button className="btn-danger" onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
                     </div>
                 </div>
@@ -381,6 +272,9 @@ const EventDefinition = () => {
                 </TabPane>
                 <TabPane tabId={3}>
                 <div className="row ml-2 mt-3 "><AcceptDeclinePlayers /> </div>       
+                 </TabPane>
+                <TabPane tabId={4}>
+                <div className="row ml-2 mt-3 "><SeeUserRequest /> </div>       
                  </TabPane>
 
             </TabContent>

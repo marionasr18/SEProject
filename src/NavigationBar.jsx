@@ -2,15 +2,20 @@
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 function NavigationBar() {
   const nav = useNavigate();
   const [user, setUser] = useState(false)
+  useEffect(() => {
+    let userFromStorage = localStorage.getItem('item_key');
+    if (userFromStorage === 'SU')
+      setUser(true)
+  }, [])
   const handleLogout = () => {
-   sessionStorage .removeItem('auth')
-  localStorage  .removeItem('item_key');
+    sessionStorage.removeItem('auth')
+    localStorage.removeItem('item_key');
 
     nav("/", { replace: true })
   }
@@ -33,18 +38,24 @@ function NavigationBar() {
           {!user && <a href="/friends" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white col-2">
             <span className='lead'>Friends  </span>
           </a>}
+         
           <a href="/event" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Games</span>
           </a>
           {!user && <a href="editProfile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Profile</span>
           </a>}
+          {!user && <a href="/chatRoom" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
+              <span className='lead'>Chat Room</span>
+            </a>}
           {user && <> <a href="/sportsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
             <span className='lead'>Sport Definition</span>
           </a>
             <a href="/fieldsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
               <span className='lead'>Fields Definition</span>
-            </a></>}
+            </a>
+           
+          </>}
         </div>
         <div>
           <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white lg:mt-0" onClick={handleLogout}>Sign out</button>

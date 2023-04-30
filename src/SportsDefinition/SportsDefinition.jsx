@@ -7,11 +7,13 @@ import Footer from "../Footer";
 import NavigationBar from "../NavigationBar";
 import Table from 'react-bootstrap/Table';
 import axios from 'axios';
+// import { useToasts } from 'react-toast-notifications'
 
 
 
 
 const SportsDefinition = () => {
+    // const { addToast } = useToasts()
 
     const nav = useNavigate();
 
@@ -55,7 +57,11 @@ const SportsDefinition = () => {
         const data = await FetchData('http://localhost:3001/api/sports/createSport', 'post', objToSave)
         if (data.data.success === 1) {
             setState(STATE)
-            alert('Sports added succesfully.')
+            // alert('Sports added succesfully.')
+            // addToast('Sports added succesfully.', {
+            //     appearance: 'success',
+            //     autoDismiss: true,
+            //   })
             FillData()
             // nav('/login')
         }
