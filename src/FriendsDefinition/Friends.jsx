@@ -48,14 +48,14 @@ const Friends = () => {
                 </>)
         })
     }, [state.playersListNotFiltered])
-    const handleChange = useCallback((e) => {
+    const handleChange = useCallback(async(e) => {
         let value = e.target.value
-
+        let dataFetched = await FetchData(`http://localhost:3001/api/users/getUser/${value}`, 'get')
+        
         setState(prv => {
-            let filteredPlayers = prv.playersListNotFiltered.filter(e => e.first_name === value || e.last_name === value)
             return {
                 ...prv,
-                playersList: filteredPlayers
+                playersList: dataFetched.data.data
             }
         })
 
@@ -66,7 +66,7 @@ const Friends = () => {
             {/* <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div> */}
             <div className="row mt-3">
                 <div className="col-2 ml-5">Search </div>
-                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" onBlur={handleChange} /></div>
+                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" handleChange={handleChange} /></div>
             </div>
             <div className="row mt-4">
                 {drawCards()}

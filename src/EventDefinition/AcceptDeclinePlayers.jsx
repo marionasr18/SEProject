@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './AcceptDeclinePlayers.css';
+import moment from 'moment'
 import { FetchData } from '../functions';
+import { isEmpty } from 'lodash';
+
 
 const AcceptDeclinePlayers = ({ event, onSwipe }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,54 +42,36 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
   };
 
   const onAcceptClick = useCallback(async (id) => {
-    let token = sessionStorage.getItem('auth');
-
     let objToSave = {
-      event_name: state.eventName,
-      event_location: state.location,
-      event_description: state.desc,
-      user_id: token,
-      sport_id: state.sports,
-      field_id: state.field,
-
-      capacity: state.capacity,
+      status: 'Accepted',
+      eventId: currentRequest.event_id,
+      userId: id.user_id,
     }
-    const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
+    const data = await FetchData('http://localhost:3001/api/events/acceptDeclineRequest', 'post', objToSave)
     if (data.data.success === 1) {
-      setState({
-        eventsData: [],
-        requestsData: [],
-      })
-      alert('EVENT added succesfully.')
+      alert('Sent succesfully.')
       FillData()
       // nav('/login')
     }
   }, [state])
   const onRejectClick = useCallback(async (id) => {
-    let token = sessionStorage.getItem('auth');
-
     let objToSave = {
-      event_name: state.eventName,
-      event_location: state.location,
-      event_description: state.desc,
-      user_id: token,
-      sport_id: state.sports,
-      field_id: state.field,
-
-      capacity: state.capacity,
+      status: 'Declined',
+      eventId: currentRequest.event_id,
+      userId: id.user_id,
     }
-    const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
+    const data = await FetchData('http://localhost:3001/api/events/acceptDeclineRequest', 'post', objToSave)
     if (data.data.success === 1) {
-      setState({
-        eventsData: [],
-        requestsData: [],
-      })
-      alert('EVENT added succesfully.')
+      alert('Sent succesfully.')
       FillData()
-      // nav('/login')
     }
   }, [state])
   const drawCards = useCallback(() => {
+    if( isEmpty(state.requestsData)){
+      return(<>
+      <h1 className='ml-5'>There is no pending request.</h1>
+      </>)
+    }
     return (
       <ul>
         {state.requestsData?.map(e => (
@@ -109,17 +94,18 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
 
   }, [state.requestsData])
   const declineRequest = () => {
-
+    setStateView(false)
     setCurrentIndex(currentIndex + 1);
   };
 
   const currentRequest = state.eventsData[currentIndex];
-
+  console.log(currentRequest)
   if (!currentRequest) {
-    return <p>No more requests!</p>;
+    return(<> <p>No more requests!</p> 
+    <div className='ml-1' onClick={()=>setCurrentIndex(0)}>Start from begining</div></>)
   }
 return(<>
-<div className='row'>
+{/* <div className='row'>
   <div className='d-flex justify-content-center '>
   <div className='text-center'>
     <div className='row'>
@@ -136,7 +122,44 @@ return(<>
       </div>
     </div>
   </div>
-</div></div>
+</div></div> */}
+<div className="container">
+<div className="row">
+    <div className="col-lg-4 offset-3">
+        <div className="card card-margin">
+            <div className="card-header no-border">
+                <h5 className="card-title">{currentRequest.sport_name}</h5>
+            </div>
+            <div className="card-body pt-0">
+                <div className="widget-49">
+                    <div className="widget-49-title-wrapper">
+                        <div className="widget-49-date-primary">
+                            <span className="widget-49-date-day">{moment(currentRequest.event_date).format('MM/DD/YYYY')}</span>
+                            {/* <span className="widget-49-date-month">{currentRequest.event_date}</span> */}
+                        </div>
+                        <div className="widget-49-meeting-info">
+                            <span className="widget-49-pro-title">{currentRequest.event_location} at field {currentRequest.field_name}</span>
+                           
+                        </div>
+                    </div>
+                    <ol className="widget-49-meeting-points">
+                      <span className="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+
+                        <li className="widget-49-meeting-item"><span>{currentRequest.event_description}</span></li>
+                        {/* <li className="widget-49-meeting-item"><span>Data migration is in scope</span></li>
+                        <li className="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li> */}
+                    </ol>
+                    <div className="widget-49-meeting-action">
+                    <button className='btn-success' onClick={(e) => handleLearnMore(currentRequest.event_id)}>View All</button>
+                    <button className='btn-primary offset-7' onClick={declineRequest}>View Next</button>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <div className='row mt-4'>
 {stateView&&drawCards()}</div>
 </>)

@@ -14,8 +14,8 @@ const ReceivedFriendRequest = () => {
 
     const FillData = useCallback(async () => {
         let token = sessionStorage.getItem('auth')
-        let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
-        // let data = await FetchData(`http://localhost:3001/api/friendRequests/pending/${token}`, 'get')
+        //let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
+        let data = await FetchData(`http://localhost:3001/api/connections/friendRequests/pending/${token}`, 'get')
         let finaldata = data.data
         setState(prv => {
             return {

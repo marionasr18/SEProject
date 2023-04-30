@@ -12,20 +12,20 @@ const ExploreUser = () => {
     }
     const [state, setState] = useState(STATE)
 
-    const FillData = useCallback(async () => {
-        let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
-        let finaldata = data.data
-        setState(prv => {
-            return {
-                ...prv,
-                // playersList:data.data,
-                playersListNotFiltered: finaldata.data,
-            }
-        })
-    }, [])
-    useEffect(() => {
-        FillData()
-    }, [])
+    // const FillData = useCallback(async () => {
+    //     let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
+    //     let finaldata = data.data
+    //     setState(prv => {
+    //         return {
+    //             ...prv,
+    //             // playersList:data.data,
+    //             playersListNotFiltered: finaldata.data,
+    //         }
+    //     })
+    // }, [])
+    // useEffect(() => {
+    //     FillData()
+    // }, [])
     const handleSendRequest = useCallback(async (id) => {
         let token = sessionStorage.getItem('auth');
 
@@ -37,7 +37,7 @@ const ExploreUser = () => {
         if (data.data.success === 1) {
             setState(STATE)
             alert('Request Sent Successfully.')
-            FillData()
+            // FillData()
             // nav('/login')
         }
 
@@ -63,14 +63,14 @@ const ExploreUser = () => {
                 </>)
         })
     }, [state.playersListNotFiltered])
-    const handleChange = useCallback((e) => {
+    const handleChange = useCallback(async(e) => {
         let value = e.target.value
-
+        let dataFetched = await FetchData(`http://localhost:3001/api/users/getUser/${value}`, 'get')
+        
         setState(prv => {
-            let filteredPlayers = prv.playersListNotFiltered.filter(e => e.first_name === value || e.last_name === value)
             return {
                 ...prv,
-                playersList: filteredPlayers
+                playersListNotFiltered: dataFetched.data.data
             }
         })
 

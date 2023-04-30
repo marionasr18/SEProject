@@ -40,7 +40,7 @@ function App() {
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
             <Route path='/event'><Route index element={<EventDefinition />} /></Route>
-            {/* <Route path='/event2'><Route index element={<ChatsPage />} /></Route> */}
+            <Route path='/chatRoom'><Route index element={<ChatsPage />} /></Route> 
             <Route path='/event3'><Route index element={<ProfileFacebook />} /></Route>
          
 

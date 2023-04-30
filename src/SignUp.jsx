@@ -4,6 +4,8 @@ import { FetchData } from './functions';
 import Select from 'react-select';
 import NavigationBar from './NavigationBar';
 import FileDialogue from './FileDialogue';
+import { Buffer } from 'buffer';
+
 
 // import './app.css';
 // import data from './Users.json';
@@ -30,25 +32,24 @@ export default function SignUp() {
 
     const [state, setState] = useState(STATE)
     const FillData = useCallback(async () => {
- 
+
 
         let data = await FetchData(`http://localhost:3001/api/users/getUserById`, 'get')
-        debugger
 
         let finalData = data.data
-        setState(prv => {
-            return {
-                ...prv,
-                email: finalData.data[0].email,
-                imgUrl: finalData.data[0].profile_picture,
-                username: finalData.data[0].username,
-                sex: finalData.data[0].gender,
-                phoneNb: finalData.data[0].phoneNumber,
-                dob: finalData.data[0].dob,
-            }
-        })
-
-        console.log(data.data)
+        if (finalData.success === 1) {
+            setState(prv => {
+                return {
+                    ...prv,
+                    email: finalData.data[0].email,
+                    imgUrl: finalData.data[0].profile_picture,
+                    username: finalData.data[0].username,
+                    sex: finalData.data[0].gender,
+                    phoneNb: finalData.data[0].phoneNumber,
+                    dob: finalData.data[0].dob,
+                }
+            })
+        }
     }, [])
     useEffect(() => {
         if (loc.pathname === '/editProfile') {
@@ -100,11 +101,45 @@ export default function SignUp() {
         const data = await FetchData('http://localhost:3001/api/users/createUser', 'post', params)
         if (data.success === 1) {
             console.log('username', state.username);
-        const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post',{username: state.username})
-            
-          
-            
-             alert('Sign Up succesfully. please return to Login Page')
+            const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post', { username: state.username })
+
+
+
+            alert('Sign Up succesfully. please return to Login Page')
+
+            // nav('/login')
+        }
+        if (data.success === 0) {
+
+        }
+    }, [state])
+    const handleUpdate = useCallback(async () => {
+        let token = sessionStorage.getItem('auth')
+        const imageData = state.imgUrl.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(imageData, 'base64');
+        
+        // create a new Blob object with the binary data from the buffer
+        const blob = new Blob([buffer], { type: 'image/jpeg' });
+        debugger
+
+        let params = {
+            email: state.email,
+            // dob: state.dob,
+            // address: state.address,
+            //    password: state.password,
+            // gender: 'M',
+            // phoneNumber: state.phoneNb,
+            user_id: token,
+            profile_picture: blob
+        }
+        console.log(params)
+        const data = await FetchData('http://localhost:3001/api/users/updateUserProfile', 'post', params)
+        if (data.success === 1) {
+            console.log('username', state.username);
+
+
+
+            alert('Sign Up succesfully. please return to Login Page')
 
             // nav('/login')
         }
@@ -136,7 +171,7 @@ export default function SignUp() {
     //         }))
     //         // console.log(obj.username)
     //     }, [obj.username])
-    const onUpld = useCallback((imageUrl) => setState({ ...state, imgUrl: imageUrl }), [])
+    const onUpld = useCallback((imageUrl) => setState(prv => { return { ...prv, imgUrl: imageUrl } }), [])
     return (
         <>
             {loc.pathname === '/editProfile' && <NavigationBar />}
@@ -161,7 +196,7 @@ export default function SignUp() {
                     <div className="row mt-3">
                         <div className="col-3">Username</div>
                         <div className="col-5">
-                            <input type="text" className="form-control" value={state.username} name="username" onChange={handleChange} />
+                            <input type="text" className="form-control" disabled={loc.pathname === '/editProfile'} value={state.username} name="username" onChange={handleChange} />
                         </div>
                     </div>
                     <div className="row mt-2">
@@ -206,7 +241,7 @@ export default function SignUp() {
                             <input type="number" className="form-control " value={state.phoneNb} name="phoneNb" onChange={handleChange} ></input>
                         </div>
                     </div>
-                    <div className="row mt-2">
+                    {/* <div className="row mt-2">
                         <div className="col-3">Sports</div>
                         <div className="col-5">
                             <Select
@@ -222,7 +257,7 @@ export default function SignUp() {
                                 options={state.sportsOptions}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <div className='row'>
                         <div className=" ui small image">
                             <FileDialogue imgUrl={state.imgUrl} onUpload={onUpld} />
@@ -232,7 +267,7 @@ export default function SignUp() {
                     {loc.pathname === '/editProfile' && <div className="row mt-5">
 
                         <button type="button" className="btn btn-warning offset-7 col-1" style={{ backgroundColor: 'yellow', color: 'black' }}>Undo</button>
-                        <button type="button" className="btn btn-success col-1 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>Save</button>
+                        <button type="button" onClick={handleUpdate} className="btn btn-success col-1 offset-1 " style={{ backgroundColor: 'green', color: 'white' }}>Save</button>
 
                     </div>}
                     {loc.pathname === '/signUp' && <div className="row mt-5">
