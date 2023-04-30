@@ -16,6 +16,7 @@ import Friends from "./FriendsDefinition/Friends";
 import FriendsDefinition from "./FriendsDefinition/FriendsDefinition";
 import ProfileFacebook from "./ProfileFacebook";
 import ChatsPage from "./ChatingRoom/ChatsPage";
+import ProfileOfUser from "./ProfileOfUser";
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
             <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
             <Route path='/event'><Route index element={<EventDefinition />} /></Route>
             <Route path='/chatRoom'><Route index element={<ChatsPage />} /></Route> 
-            <Route path='/event3'><Route index element={<ProfileFacebook />} /></Route>
+            <Route path='/event3'><Route index element={<ProfileOfUser />} /></Route>
          
 
         </Route>

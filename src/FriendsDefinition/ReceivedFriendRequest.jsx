@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import NavigationBar from "../NavigationBar";
+import axios from "axios";
 
 const ReceivedFriendRequest = () => {
     const STATE = {
@@ -16,6 +17,7 @@ const ReceivedFriendRequest = () => {
         let token = sessionStorage.getItem('auth')
         //let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
         let data = await FetchData(`http://localhost:3001/api/connections/friendRequests/pending/${token}`, 'get')
+        debugger
         let finaldata = data.data
         setState(prv => {
             return {
@@ -29,19 +31,19 @@ const ReceivedFriendRequest = () => {
         FillData()
     }, [])
 const onAcceptClick = useCallback(async(id)=>{
-    let token = sessionStorage.getItem('auth');
+    // let token = sessionStorage.getItem('auth');
 
-    let objToSave = {
-        event_name: state.eventName,
-        event_location: state.location,
-        event_description: state.desc,
-        user_id: token,
-        sport_id: state.sports,
-        field_id: state.field,
+    // let objToSave = {
+    //     event_name: state.eventName,
+    //     event_location: state.location,
+    //     event_description: state.desc,
+    //     user_id: token,
+    //     sport_id: state.sports,
+    //     field_id: state.field,
 
-        capacity: state.capacity,
-    }
-    const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
+    //     capacity: state.capacity,
+    // }
+    const data = await FetchData(`http://localhost:3001/api/connections/friendRequests/accept/${id.connection_id}`, 'post')
     if (data.data.success === 1) {
         setState(STATE)
         alert('EVENT added succesfully.')
@@ -52,23 +54,20 @@ const onAcceptClick = useCallback(async(id)=>{
 const onRejectClick = useCallback(async(id)=>{
     let token = sessionStorage.getItem('auth');
 
-    let objToSave = {
-        event_name: state.eventName,
-        event_location: state.location,
-        event_description: state.desc,
-        user_id: token,
-        sport_id: state.sports,
-        field_id: state.field,
+    axios.delete(`http://localhost:3001/api/connections/friendRequests/pending/${id.connection_id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
 
-        capacity: state.capacity,
-    }
-    const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
-    if (data.data.success === 1) {
-        setState(STATE)
-        alert('EVENT added succesfully.')
-        FillData()
-        // nav('/login')
-    }
+    })
+    .then((response) => {
+      alert(response.data.message);
+    })
+    .catch((error) => {
+      alert(error);
+    });
+    FillData()
 },[state])
     const drawCards = useCallback(() => {
         return (
@@ -92,18 +91,7 @@ const onRejectClick = useCallback(async(id)=>{
           );
           
     }, [state.playersListNotFiltered])
-    const handleChange = useCallback((e) => {
-                                let value = e.target.value
 
-        setState(prv => {
-                                let filteredPlayers = prv.playersListNotFiltered.filter(e => e.first_name === value || e.last_name === value)
-                            return {
-                                ...prv,
-                                playersList: filteredPlayers
-            }
-        })
-
-    }, [])
                             return (
                             <>
                                 {/* <NavigationBar /> */}
