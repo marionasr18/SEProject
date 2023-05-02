@@ -46,7 +46,11 @@ const onAcceptClick = useCallback(async(id)=>{
     const data = await FetchData(`http://localhost:3001/api/connections/friendRequests/accept/${id.connection_id}`, 'post')
     if (data.data.success === 1) {
         setState(STATE)
+<<<<<<< HEAD
         alert('Friend added succesfully.')
+=======
+        alert('Sent succesfully.')
+>>>>>>> 29043cc3a7f1553c96cb8ee1ca6e679b30648f7e
         FillData()
         // nav('/login')
     }
