@@ -47,8 +47,19 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
       eventId: currentRequest.event_id,
       userId: id.user_id,
     }
+    debugger
     const data = await FetchData('http://localhost:3001/api/events/acceptDeclineRequest', 'post', objToSave)
-    if (data.data.success === 1) {
+    if (data.data.success === 1) 
+    {
+      let _data = {
+        
+          "recipient":id.email,
+          "subject":"Approval",
+          "body":`Mr. ${id.username}, You have been approved to the game`
+      
+      }
+      const dataMail = await FetchData('http://localhost:3001/api/sendMail', 'post', _data)
+
       alert('Sent succesfully.')
       FillData()
       // nav('/login')
@@ -62,6 +73,14 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
     }
     const data = await FetchData('http://localhost:3001/api/events/acceptDeclineRequest', 'post', objToSave)
     if (data.data.success === 1) {
+      let _data = {
+        
+        "recipient":id.email,
+        "subject":"Rejected",
+        "body":`Mr. ${id.username},Unfortunately You have not been approved to the event`
+    
+    }
+    const dataMail = await FetchData('http://localhost:3001/api/sendMail', 'post', _data)
       alert('Sent succesfully.')
       FillData()
     }
@@ -93,9 +112,13 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
     );
 
   }, [state.requestsData])
-  const declineRequest = () => {
+  const nextRequest = () => {
     setStateView(false)
     setCurrentIndex(currentIndex + 1);
+  };
+  const previousRequest = () => {
+    setStateView(false)
+    setCurrentIndex(currentIndex - 1);
   };
 
   const currentRequest = state.eventsData[currentIndex];
@@ -117,7 +140,7 @@ return(<>
           <div className='col-7'>
             <button className='btn-success' onClick={(e) => handleLearnMore(currentRequest.event_id)}>Learn more</button></div>
           <div className='col-7'>
-            <button onClick={declineRequest}>View Next</button></div>
+            <button onClick={nextRequest}>View Next</button></div>
         </div>
       </div>
     </div>
@@ -150,8 +173,9 @@ return(<>
                         <li className="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li> */}
                     </ol>
                     <div className="widget-49-meeting-action">
-                    <button className='btn-success' onClick={(e) => handleLearnMore(currentRequest.event_id)}>View All</button>
-                    <button className='btn-primary offset-7' onClick={declineRequest}>View Next</button>
+                    <button className='btn btn-success' onClick={(e) => handleLearnMore(currentRequest.event_id)}>View All</button>
+                    <button className='btn btn-primary offset-2' onClick={nextRequest}> Previous</button>
+                    <button className='btn btn-primary ' onClick={previousRequest}>View Next</button>
                     </div>
                   
                 </div>

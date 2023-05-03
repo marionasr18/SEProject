@@ -21,7 +21,7 @@ const EventDefinition = () => {
         { tabId: 1, label: "Create New Game" },
         { tabId: 2, label: "Join Game" },
         { tabId: 3, label: "View Created Games" },
-        { tabId: 4, label: "View Pending Requests" },
+        { tabId: 4, label: "View My Requests" },
     ]
     const nav = useNavigate();
 
@@ -40,10 +40,13 @@ const EventDefinition = () => {
     const [dateOfEvent, setDateOfEvent] = useState(new Date());
     const [startTime, setStartTime] = useState('10:00');
     const [endtTime, setEndtTime] = useState('10:00');
+    const { setIsLoading } = useContext(LoadingContext);
 
     const FillData = useCallback(async () => {
         let token = sessionStorage.getItem('auth')
+        setIsLoading(prv=>prv+1)
         let data = await FetchData('http://localhost:3001/api/fields/getAllFields', 'get')
+        setIsLoading(prv=>prv-1)
         let finaldata = data.data
         if (finaldata.success === 1)
             setState(prv => {
@@ -53,11 +56,14 @@ const EventDefinition = () => {
                         return {
                             value: e.field_id,
                             label: e.field_name,
+                            sport_id: e.sport_id,
                         }
                     })
                 }
             })
+            setIsLoading(prv=>prv+1)
         let data2 = await FetchData('http://localhost:3001/api/sports/getAllSports', 'get')
+        setIsLoading(prv=>prv-1)
         let finaldata2 = data2.data
         if (finaldata2.success === 1)
             setState(prv => {
@@ -72,7 +78,9 @@ const EventDefinition = () => {
                 }
             })
         if (state.tabId === 2) {
+            setIsLoading(prv=>prv+1)
             let data3 = await FetchData(`http://localhost:3001/api/events/getEventToJoinById/${token}`, 'get')
+            setIsLoading(prv=>prv-1)
             let finaldata3 = data3.data
             if (finaldata3.success === 1)
                 setState(prv => {
@@ -129,7 +137,7 @@ FillData()
                         <p className="card-text">{e.event_description}</p>
                         <span className="card-link">Starts At: {e.start_time}</span>
                         <span className="card-link">Ends At: {e.end_time}</span>
-                        <div><button className="btn-danger" onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
+                        <div><button className="btn btn-danger" onClick={()=>handleRequestToJoin(e.event_id)}>Request to Join</button></div>
                     </div>
                 </div>
 
@@ -152,7 +160,10 @@ FillData()
     }
     const handleCreateGame = useCallback(async () => {
         let token = sessionStorage.getItem('auth');
-
+if(startTime>endtTime){
+    alert('End Time Must be greater than start time')
+    return
+}
         let objToSave = {
             event_name: state.eventName,
             event_date: dateOfEvent,
@@ -202,9 +213,12 @@ FillData()
                                 defaultValue={state.sports}
                                 onChange={e => {
                                     setState(prv => {
+                                        let fieldOptionsFiltered = prv.fieldOptions.filter(el=>el.sport_id===e.value)
+                                        console.log(fieldOptionsFiltered,'fieldOptionsFiltere')
                                         return {
                                             ...prv,
-                                            sports: e.value
+                                            sports: e.value,
+                                            fieldOptions:fieldOptionsFiltered,
                                         }
                                     })
                                 }}
