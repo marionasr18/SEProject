@@ -2,7 +2,7 @@
 // import Nav from 'react-bootstrap/Nav';
 // import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import { FetchData } from './functions';
@@ -10,7 +10,11 @@ import { cloneDeep, isEmpty } from "lodash";
 import axios from "axios";
 
 import NavigationBar from './NavigationBar';
+import { LoadingContext } from './LoadingContextWrapper';
+
 function Profile() {
+  const { setIsLoading } = useContext(LoadingContext);
+
   const STATE = {
     articles:[]
   }
@@ -27,10 +31,10 @@ const _data = {
   apiKey:'9f79c0c7e60f45ef824d2876e97a1ee2'
 }
 let queryparams = new URLSearchParams({ ..._data });
-  // let data = await FetchData('https://newsapi.org/v2/top-headlines','get',_data)
+setIsLoading(prv=>prv+1)
   let data = await axios({ method: 'get', url: 'https://newsapi.org/v2/top-headlines' + `${!isEmpty(_data) ? `?${queryparams.toString()}` : ''}`, crossDomain: true, signal: null });
-  // let data2 = await FetchData( 'http://20.74.234.61:18792/DailyRate/Service1.svc/web/getrate', 'get');
-    console.log(data.data.articles)
+  setIsLoading(prv=>prv-1)
+  console.log(data.data.articles)
 
   setState(prv=>{return{
     ...prv,
