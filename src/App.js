@@ -26,7 +26,7 @@ function App() {
       <Loading />
 
       <Routes>
-        <Route path='/signUp' element={<SignUp />} />
+        <Route path='/signUp' element={<ProfileOfUser />} />
         <Route element={<Auth />}>
           <Route path='/' element={<Outlet />}>
            
@@ -39,7 +39,7 @@ function App() {
             <Route path='/friends'><Route index element={<FriendsDefinition />} /></Route>
             <Route path='/sportsDefinition'><Route index element={<SportsDefinition />} /></Route>
             <Route path='/fieldsDefinition'><Route index element={<FieldDefinition />} /></Route>
-            <Route path='/editProfile'><Route index element={<SignUp />} /></Route>
+            <Route path='/editProfile'><Route index element={<ProfileOfUser />} /></Route>
             <Route path='/event'><Route index element={<EventDefinition />} /></Route>
             <Route path='/chatRoom'><Route index element={<ChatsPage />} /></Route> 
             <Route path='/event3'><Route index element={<ProfileOfUser />} /></Route>

@@ -22,6 +22,8 @@ export default function ProfileOfUser() {
         phoneNb: '',
         dob: '',
         password: '',
+        passConfirm: true,
+        usernameConfirm: true,
         passwordConfirm: '',
         sports: '',
         sportsOptions: [{ value: 'bas', label: 'Baskteball' },
@@ -87,19 +89,37 @@ export default function ProfileOfUser() {
 
         nav(-1)
     }, [])
+    const getImageBlob = (base64Image) => {
+        return fetch(base64Image)
+          .then((response) => {
+            return response.blob();
+          })
+          .then((blob) => {
+            return blob;
+          });
+      };
+      
     const handleSaveUser = useCallback(async () => {
-        let params = {
+        // if(!state.usernameConfirm||!state.passwordConfirm){
+        //     alert('cannot save user')
+        //     return
+        // }
+  
+            
+          debugger
+          let params = {
             username: state.username,
             email: state.email,
             dob: state.dob,
             address: state.address,
             password: state.password,
-            gender: 'M',
+            gender: state.gender,
             phoneNumber: state.phoneNb,
+            profile_picture: state.imgUrl,
         }
         console.log(params)
         const data = await FetchData('http://localhost:3001/api/users/createUser', 'post', params)
-        if (data.success === 1) {
+        if (data.data.success === 1) {
             console.log('username', state.username);
             const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post', { username: state.username })
 
@@ -134,7 +154,7 @@ export default function ProfileOfUser() {
         }
         console.log(params)
         const data = await FetchData('http://localhost:3001/api/users/updateUserProfile', 'post', params)
-        if (data.success === 1) {
+        if (data.data.success === 1) {
             console.log('username', state.username);
 
 
@@ -147,33 +167,47 @@ export default function ProfileOfUser() {
 
         }
     }, [state])
-    // const handlePassConfirm = useCallback(
-    //     (e) => {
+    const handleBlurPass = useCallback((e) => {
+        if (e.target.value !== state.password) {
+            setState(prv => {
+                return {
+                    ...prv,
+                    passConfirm: false,
+                }
+            })
+        }
+        else {
+            setState(prv => {
+                return {
+                    ...prv,
+                    passConfirm: true,
+                }
+            })
+        }
+    }, [state.password])
+    const handleBlurUsername = useCallback(async (e) => {
+        let data = await FetchData(`http://localhost:3001/api/users/getUserByUsername/${e.target.value}`, 'get')
+        if (data?.data?.data?.length >0)
+            setState(prv => {
+                return {
+                    ...prv,
+                    usernameConfirm: false,
+                }
+            })
+        else
+            setState(prv => {
+                return {
+                    ...prv,
+                    usernameConfirm: true,
+                }
+            })
 
-
-    //         setObj(item => ({
-    //             ...item, passConfirmation: e.target.value
-    //         }))
-    //         // console.log(obj.passConfirmation)
-    //     }, [obj.passConfirmation])
-    // const handlePass = useCallback(
-    //     (e) => {
-    //         setObj(item => ({
-    //             ...item, password: e.target.value
-    //         }))
-    //         // console.log(obj.password)
-    //     }, [obj.password])
-    // const handleUname = useCallback(
-    //     (e) => {
-
-    //         setObj(item => ({
-    //             ...item, username: e.target.value
-    //         }))
-    //         // console.log(obj.username)
-    //     }, [obj.username])
+    }, [state.password])
     const onUpld = useCallback((imageUrl) => setState(prv => { return { ...prv, imgUrl: imageUrl } }), [])
+    console.log(state.imgUrl,'gayyyyyyyyyyyyy')
     return (
         <>
+         {loc.pathname === '/editProfile' && <NavigationBar />}
             <div className="container rounded bg-white mt-1 mb-1">
                 <div className="row">
                     <div className="col-md-3 border-right">
@@ -189,33 +223,46 @@ export default function ProfileOfUser() {
                             </div>
                             <div className="row mt-2">
                                 <div className="col-md-8"><label className="labels">Username</label>
-                                    <input type="text" className="form-control" onChange={handleChange} placeholder="username" value={state.username} name='username'/></div>
+                                    <input type="text" className="form-control" disabled={loc.pathname === '/editProfile'} onBlur={handleBlurUsername} onChange={handleChange} placeholder="username" value={state.username} name='username' /></div>
+
                             </div>
+                            {!state.usernameConfirm && <span className='text-danger'>Username Already exists</span>}
                             <div className="row mt-3">
-                                <div className="col-md-12"><label className="labels">Mobile Number</label><input type="number" onChange={handleChange} className="form-control" placeholder="enter phone number" value={state.phoneNb} name='phoneNb'/></div>
-                                <div className="col-md-12"><label className="labels">Address </label><input type="text" className="form-control"  onChange={handleChange} placeholder="enter address" value={state.address} name="address"/></div>
+                                <div className="col-md-12"><label className="labels">Mobile Number</label><input type="number" onChange={handleChange} className="form-control" placeholder="enter phone number" value={state.phoneNb} name='phoneNb' /></div>
+                                <div className="col-md-12"><label className="labels">Address </label><input type="text" className="form-control" onChange={handleChange} placeholder="enter address" value={state.address} name="address" /></div>
                                 <div className="col-md-12"><label className="labels">Email ID</label><input type="text" className="form-control" onChange={handleChange} placeholder="enter email id" value={state.email} name='email' /></div>
-                                <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" onChange={handleChange} placeholder="password" value={state.password} name='password'/></div>
-                                <div className="col-md-12"><label className="labels">Confirm Password</label><input type="password" className="form-control" onChange={handleChange} placeholder="passwordConfirm"
-                                 value={state.passwordConfirm} name='passwordConfirm'/></div>
+                                <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" onChange={handleChange} placeholder="password" value={state.password} name='password' /></div>
+                                <div className="col-md-12"><label className="labels">Confirm Password</label><input type="password" className="form-control" onChange={handleChange} onBlur={handleBlurPass} placeholder="Confirm password"
+                                    value={state.passwordConfirm} name='passwordConfirm' /></div>
+                                {!state.passConfirm && <span className='text-danger'>Password does not match</span>}
                             </div>
                             {/* <div className="row mt-3">
                                 <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" onChange={handleChange} placeholder="country" value="" /></div>
                                 <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" value="" onChange={handleChange} placeholder="state" /></div>
                             </div> */}
-                            <div className="mt-5 text-center"><button className="btn btn-primary profile-button" type="button">Save Profile</button></div>
-                        </div>
+                            {loc.pathname === '/signUp' && 
+                            <div className="mt-5 text-center"><button onClick={handleSaveUser} className="btn btn-outline-primary btn-lg" type="button">Save Profile</button></div>
+
+}
+                            {loc.pathname === '/editProfile' &&
+                            <div className="mt-5 text-center"><button onClick={handleUpdate} className="btn btn-outline-primary" type="button">Save Profile</button></div>
+}
+                            </div>
                     </div>
                     <div className="col-md-4">
                         <div className="p-3 py-5">
-                            {/* <div className="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;Experience</span></div><br/> */}
-                                <div className="col-md-12"><label className="labels">Date of Birth</label><input type="text" className="form-control" onChange={handleChange} placeholder="--/--/--" value={state.dob} name='dob'/></div> <br/>
-                                    <div className="col-md-12"><label className="labels">Gender</label><input type="text" className="form-control"  onChange={handleChange}  value={state.sex} name='sex'/></div>
-                                </div>
+                        <div className="col-2 offset-3 ml-4 title text-primary">
                         </div>
+                            {/* <div className="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;Experience</span></div><br/> */}
+                            <div className="col-md-12"><label className="labels">Date of Birth</label><input type="text" className="form-control" onChange={handleChange} placeholder="--/--/--" value={state.dob} name='dob' /></div> <br />
+                            <div className="col-md-12"><label className="labels">Gender</label><input type="text" className="form-control" onChange={handleChange} value={state.sex} name='sex' /></div>
+                        </div>
+                        {loc.pathname === '/signUp' &&  <button className="btn btn-danger" onClick={handleBack}>Back</button>}
+
                     </div>
                 </div>
-         
+            </div>
+
         </>
     )
 }
