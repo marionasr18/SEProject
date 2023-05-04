@@ -105,15 +105,13 @@ export default function ProfileOfUser() {
         //     return
         // }
   
-            
-          debugger
           let params = {
             username: state.username,
             email: state.email,
             dob: state.dob,
             address: state.address,
             password: state.password,
-            gender: state.gender,
+            gender: state.sex,
             phoneNumber: state.phoneNb,
             profile_picture: state.imgUrl,
         }
@@ -121,36 +119,27 @@ export default function ProfileOfUser() {
         const data = await FetchData('http://localhost:3001/api/users/createUser', 'post', params)
         if (data.data.success === 1) {
             console.log('username', state.username);
-            const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post', { username: state.username })
-
-
+            debugger
+            const data2 = await FetchData('http://localhost:3001/createChatUser', 'post', { username: state.username })
 
             alert('Sign Up succesfully. please return to Login Page')
 
             // nav('/login')
         }
-        if (data.success === 0) {
 
-        }
     }, [state])
     const handleUpdate = useCallback(async () => {
         let token = sessionStorage.getItem('auth')
-        const imageData = state.imgUrl.replace(/^data:image\/\w+;base64,/, '');
-        const buffer = Buffer.from(imageData, 'base64');
-
-        // create a new Blob object with the binary data from the buffer
-        const blob = new Blob([buffer], { type: 'image/jpeg' });
-        debugger
 
         let params = {
             email: state.email,
             // dob: state.dob,
             // address: state.address,
             //    password: state.password,
-            // gender: 'M',
-            // phoneNumber: state.phoneNb,
+             gender: state.sex,
+            phoneNumber: state.phoneNb,
             user_id: token,
-            profile_picture: blob
+            profile_picture: state.imgUrl
         }
         console.log(params)
         const data = await FetchData('http://localhost:3001/api/users/updateUserProfile', 'post', params)
@@ -231,9 +220,9 @@ export default function ProfileOfUser() {
                                 <div className="col-md-12"><label className="labels">Mobile Number</label><input type="number" onChange={handleChange} className="form-control" placeholder="enter phone number" value={state.phoneNb} name='phoneNb' /></div>
                                 <div className="col-md-12"><label className="labels">Address </label><input type="text" className="form-control" onChange={handleChange} placeholder="enter address" value={state.address} name="address" /></div>
                                 <div className="col-md-12"><label className="labels">Email ID</label><input type="text" className="form-control" onChange={handleChange} placeholder="enter email id" value={state.email} name='email' /></div>
-                                <div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" onChange={handleChange} placeholder="password" value={state.password} name='password' /></div>
+                                {loc.pathname === '/signUp'&&<><div className="col-md-12"><label className="labels">Password</label><input type="password" className="form-control" onChange={handleChange} placeholder="password" value={state.password} name='password' /></div>
                                 <div className="col-md-12"><label className="labels">Confirm Password</label><input type="password" className="form-control" onChange={handleChange} onBlur={handleBlurPass} placeholder="Confirm password"
-                                    value={state.passwordConfirm} name='passwordConfirm' /></div>
+                                    value={state.passwordConfirm} name='passwordConfirm' /></div></> }
                                 {!state.passConfirm && <span className='text-danger'>Password does not match</span>}
                             </div>
                             {/* <div className="row mt-3">
