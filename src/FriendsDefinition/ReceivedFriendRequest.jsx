@@ -91,6 +91,11 @@ const onRejectClick = useCallback(async(id)=>{
     //         </ul>
     //       );
           const drawCards = useCallback(() => {
+            if(state.playersListNotFiltered?.length===0){
+                return(<>
+                <h1 className='ml-5 mt-5 text-primary'>There is no pending request.</h1>
+                </>)
+              }
             return state.playersListNotFiltered?.map(e => {
                 return (
                     <>

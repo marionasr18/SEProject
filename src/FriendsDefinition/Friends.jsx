@@ -48,6 +48,9 @@ const removeFriend = useCallback((e)=>{
     FillData()
 })
     const drawCards = useCallback(() => {
+        if(state.playersListNotFiltered?.length===0){
+return(<h1 className="ml-5 mt-5 text-primary">You still have no friend</h1>)
+        }
         return state.playersListNotFiltered?.map(e => {
             return (
                 <>
@@ -85,10 +88,10 @@ const removeFriend = useCallback((e)=>{
         <>
             {/* <NavigationBar /> */}
             {/* <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div> */}
-            <div className="row mt-3">
+            {/* <div className="row mt-3">
                 <div className="col-2 ml-5">Search </div>
                 <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" handleChange={handleChange} /></div>
-            </div>
+            </div> */}
             <div className="row mt-4">
                 {drawCards()}
             </div>

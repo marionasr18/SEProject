@@ -102,7 +102,7 @@ const ExploreUser = () => {
             {/* <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div> */}
             <div className="row mt-3">
                 <div className="col-2 ml-5">Search </div>
-                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" onBlur={handleChange} /></div>
+                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" handleChange={handleChange} /></div>
             </div>
             <div className="row mt-4">
                 {drawCards()}
