@@ -122,7 +122,7 @@ export default function ProfileOfUser() {
             debugger
             const data2 = await FetchData('http://localhost:3001/createChatUser', 'post', { username: state.username })
 
-            alert('Sign Up succesfully. please return to Login Page')
+            alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }
@@ -148,7 +148,7 @@ export default function ProfileOfUser() {
 
 
 
-            alert('Sign Up succesfully. please return to Login Page')
+            alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }

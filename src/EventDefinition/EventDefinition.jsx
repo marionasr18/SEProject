@@ -161,7 +161,7 @@ FillData()
     const handleCreateGame = useCallback(async () => {
         let token = sessionStorage.getItem('auth');
 if(startTime>endtTime){
-    alert('End Time Must be greater than start time')
+    alert('Pick and end Time larger than the start time!')
     return
 }
         let objToSave = {

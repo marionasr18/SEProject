@@ -105,7 +105,7 @@ export default function SignUp() {
 
 
 
-            alert('Sign Up succesfully. please return to Login Page')
+            alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }
@@ -139,7 +139,7 @@ export default function SignUp() {
 
 
 
-            alert('Sign Up succesfully. please return to Login Page')
+            alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }
