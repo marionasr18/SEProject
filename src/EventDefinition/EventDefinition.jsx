@@ -116,6 +116,7 @@ const EventDefinition = () => {
             event_id: e,
             user_id: token,
         }
+        debugger
         let data = await FetchData('http://localhost:3001/api/events/requestToJoin', 'post', _data)
         let finaldata = data.data
         if (finaldata.success === 1){
