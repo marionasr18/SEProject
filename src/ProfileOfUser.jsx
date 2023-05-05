@@ -49,6 +49,7 @@ export default function ProfileOfUser() {
                     sex: finalData.data[0].gender,
                     phoneNb: finalData.data[0].phoneNumber,
                     dob: finalData.data[0].dob,
+                    address: finalData.data[0].address,
                 }
             })
         }
@@ -133,8 +134,8 @@ export default function ProfileOfUser() {
 
         let params = {
             email: state.email,
-            // dob: state.dob,
-            // address: state.address,
+            dob: state.dob,
+            address: state.address,
             //    password: state.password,
              gender: state.sex,
             phoneNumber: state.phoneNb,
@@ -148,7 +149,7 @@ export default function ProfileOfUser() {
 
 
 
-            alert('Sign Up succesful. Please return to the Login Page')
+            alert('User Updated successfully')
 
             // nav('/login')
         }
@@ -193,7 +194,6 @@ export default function ProfileOfUser() {
 
     }, [state.password])
     const onUpld = useCallback((imageUrl) => setState(prv => { return { ...prv, imgUrl: imageUrl } }), [])
-    console.log(state.imgUrl,'gayyyyyyyyyyyyy')
     return (
         <>
          {loc.pathname === '/editProfile' && <NavigationBar />}
