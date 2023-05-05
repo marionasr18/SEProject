@@ -39,9 +39,9 @@ function NavigationBar() {
             <span className='lead'>Friends  </span>
           </a>}
          
-          <a href="/event" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
+          {!user &&   <a href="/event" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Games</span>
-          </a>
+          </a>}
           {!user && <a href="editProfile" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-2">
             <span className='lead'>Profile</span>
           </a>}

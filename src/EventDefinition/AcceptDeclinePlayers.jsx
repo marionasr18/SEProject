@@ -3,6 +3,8 @@ import './AcceptDeclinePlayers.css';
 import moment from 'moment'
 import { FetchData } from '../functions';
 import { isEmpty } from 'lodash';
+import logo from './SESilouhette.jpg';
+
 
 
 const AcceptDeclinePlayers = ({ event, onSwipe }) => {
@@ -96,8 +98,8 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
         {state.requestsData?.map(e => (
           <li key={e.user_id} className="row ml-4" style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
             <img
-              src={e.profile_picture}
-              alt="https://orig00.deviantart.net/d7b0/f/2011/166/d/4/avatar_100x100_by_demonfox_zephz-d3iyw6a.png"
+              src={e.profile_picture?e.profile_picture:logo}
+              alt={logo}
               className="rounded-circle col-2"
               style={{ width: '50px', height: '50px' }}
             />
@@ -125,7 +127,7 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
   console.log(currentRequest)
   if (!currentRequest) {
     return(<> <p>No more requests!</p> 
-    <div className='ml-1' onClick={()=>setCurrentIndex(0)}>Start from begining</div></>)
+    <a className='ml-1 text-primary'  onClick={()=>setCurrentIndex(0)}>Start from begining</a></>)
   }
 return(<>
 {/* <div className='row'>

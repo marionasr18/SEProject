@@ -5,6 +5,7 @@ import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import NavigationBar from "../NavigationBar";
 import axios from "axios";
+import logo from './SESilouhette.jpg';
 
 const Friends = () => {
     const STATE = {
@@ -55,7 +56,7 @@ const removeFriend = useCallback((e)=>{
                            
                         </div>
                         <div className="flex flex-col items-center pb-10">
-                            <img className="w-24 h-24  rounded-full shadow-lg" src={e.profile_picture} alt="No img" />
+                            <img className="w-24 h-24  rounded-full shadow-lg" src={e.profile_picture?e.profile_picture:logo} alt={logo} />
                             <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{e.username } </h5>
                             <span className="text-sm text-gray-500 dark:text-gray-400">{e.address}</span>
                             <div className="flex mt-4 space-x-3 md:mt-6">
