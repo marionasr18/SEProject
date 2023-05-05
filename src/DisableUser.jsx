@@ -1,66 +1,46 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
-import { FetchData } from "../functions";
 import { useNavigate } from "react-router-dom"
-import '../App.css'
-import { LoadingContext } from "../LoadingContextWrapper";
-import NavigationBar from "../NavigationBar";
 import axios from "axios";
 import logo from './SESilouhette.jpg';
+import { FetchData } from "./functions";
+import NavigationBar from "./NavigationBar";
 
-const ExploreUser = () => {
+const DisableUser = () => {
     const STATE = {
         playersList: [],
         playersListNotFiltered: [],
     }
     const [state, setState] = useState(STATE)
 
-    // const FillData = useCallback(async () => {
-    //     let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
-    //     let finaldata = data.data
-    //     setState(prv => {
-    //         return {
-    //             ...prv,
-    //             // playersList:data.data,
-    //             playersListNotFiltered: finaldata.data,
-    //         }
-    //     })
-    // }, [])
-    // useEffect(() => {
-    //     FillData()
-    // }, [])
+    const FillData = useCallback(async () => {
+        let data = await FetchData('http://localhost:3001/api/users/getAllUser', 'get')
+        let finaldata = data.data
+        setState(prv => {
+            return {
+                ...prv,
+                // playersList:data.data,
+                playersListNotFiltered: finaldata.data,
+            }
+        })
+    }, [])
+    useEffect(() => {
+        FillData()
+    }, [])
     const handleSendRequest = useCallback(async (id) => {
-        debugger
-        if(id.flag==='connected'){
-            let token = sessionStorage.getItem('auth');
 
-            axios.delete(`http://localhost:3001/api/connections/friendRequests/accepted/${id.connection_id}`, {
+            axios.delete(`http://localhost:3001/api/users/deleteUser/${id.user_id}`, {
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
               },
         
             })
             .then((response) => {
-              alert(response.data.message);
+                alert('User Deactivated successfully')
             })
             .catch((error) => {
               alert(error);
             });
-        }
-        else{
-        let token = sessionStorage.getItem('auth');
-
-        let objToSave = {
-            sender_id: token,
-            receiver_id: id.user_id
-        }
-        const data = await FetchData('http://localhost:3001/api/connections/sendFriendRequests', 'post', objToSave)
-        if (data.data.success === 1) {
-            setState(STATE)
-            alert('Request Sent Successfully.')
-            // FillData()
-            // nav('/login')
-        }}
+      
 
     }, [])
     const drawCards = useCallback(() => {
@@ -77,33 +57,33 @@ const ExploreUser = () => {
                             <span className="text-sm text-gray-500 dark:text-gray-400">{e.address}</span>
                             <div className="flex mt-4 space-x-3 md:mt-6">
                                 {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-800 dark:focus:ring-blue-800">Add friend</a> */}
-                                <button className="btn btn-outline-primary" disabled={e.flag==='pending'} onClick={()=>handleSendRequest(e)}>{e.flag==='pending'?'Pending Request':e.flag==="connected"?'Remove Friend':'Add Friend'}</button>
+                                <button className="btn btn-outline-primary" onClick={()=>handleSendRequest(e)}>Disable User</button>
                             </div>
                         </div>
                     </div>
                 </>)
         })
     }, [state.playersListNotFiltered])
-    const handleChange = useCallback(async(e) => {
-        let value = e.target.value
-        let dataFetched = await FetchData(`http://localhost:3001/api/users/getUser/${value}`, 'get')
+    // const handleChange = useCallback(async(e) => {
+    //     let value = e.target.value
+    //     let dataFetched = await FetchData(`http://localhost:3001/api/users/getAllUser`, 'get')
         
-        setState(prv => {
-            return {
-                ...prv,
-                playersListNotFiltered: dataFetched.data.data
-            }
-        })
+    //     setState(prv => {
+    //         return {
+    //             ...prv,
+    //             playersListNotFiltered: dataFetched.data.data
+    //         }
+    //     })
 
-    }, [])
+    // }, [])
     return (
         <>
-            {/* <NavigationBar /> */}
+             <NavigationBar /> 
             {/* <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div> */}
-            <div className="row mt-3">
+            {/* <div className="row mt-3">
                 <div className="col-2 ml-5">Search </div>
                 <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" handleChange={handleChange} /></div>
-            </div>
+            </div> */}
             <div className="row mt-4">
                 {drawCards()}
             </div>
@@ -111,4 +91,4 @@ const ExploreUser = () => {
 
     )
 }
-export default ExploreUser;
+export default DisableUser;

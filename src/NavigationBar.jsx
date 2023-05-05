@@ -54,6 +54,9 @@ function NavigationBar() {
             <a href="/fieldsDefinition" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
               <span className='lead'>Fields Definition</span>
             </a>
+            <a href="/disableUser" className="block lg:inline-block lg:mt-0 text-teal-200 hover:text-white  col-3">
+              <span className='lead'>Disable User</span>
+            </a>
            
           </>}
         </div>
