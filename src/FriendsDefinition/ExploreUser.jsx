@@ -5,12 +5,16 @@ import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import NavigationBar from "../NavigationBar";
 import axios from "axios";
+import Modal from 'react-bootstrap/Modal';
 import logo from './SESilouhette.jpg';
+import ProfileFacebook from "../ProfileFacebook";
+import ProfileOfUser from "./ProfileOfUser";
 
 const ExploreUser = () => {
     const STATE = {
         playersList: [],
         playersListNotFiltered: [],
+        currentRow:{}
     }
     const [state, setState] = useState(STATE)
 
@@ -28,6 +32,10 @@ const ExploreUser = () => {
     // useEffect(() => {
     //     FillData()
     // }, [])
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
     const handleSendRequest = useCallback(async (id) => {
         debugger
         if(id.flag==='connected'){
@@ -63,6 +71,15 @@ const ExploreUser = () => {
         }}
 
     }, [])
+    const onclickIcon = useCallback((e)=>{
+        setState(prv=>{
+            return{
+                ...prv,
+                currentRow:e
+            }
+        })
+setShow(true)
+    },[])
     const drawCards = useCallback(() => {
         return state.playersListNotFiltered?.map(e => {
             return (
@@ -72,7 +89,7 @@ const ExploreUser = () => {
 
                         </div>
                         <div className="flex flex-col items-center pb-10">
-                            <img className="w-24 h-24  rounded-full shadow-lg" src={e.profile_picture?e.profile_picture:logo} alt={logo} />
+                            <img className="w-24 h-24  rounded-full shadow-lg"onClick={()=>onclickIcon(e)} src={e.profile_picture?e.profile_picture:logo} alt={logo} />
                             <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{e.username} </h5>
                             <span className="text-sm text-gray-500 dark:text-gray-400">{e.address}</span>
                             <div className="flex mt-4 space-x-3 md:mt-6">
@@ -102,11 +119,23 @@ const ExploreUser = () => {
             {/* <div className="row mt-4 ml-4">In this page you can connect and contact your friends</div> */}
             <div className="row mt-3">
                 <div className="col-2 ml-5">Search </div>
-                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" handleChange={handleChange} /></div>
+                <div className="col-5"> <input type="text" className="form-control" value={state.fieldsCode} name="fieldsCode" onChange={handleChange} /></div>
             </div>
             <div className="row mt-4">
                 {drawCards()}
             </div>
+            <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><ProfileOfUser
+        props={state.currentRow}/></Modal.Body>
+        <Modal.Footer>
+          <button variant="secondary" className="btn btn-danger" onClick={handleClose}>
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
         </>
 
     )
