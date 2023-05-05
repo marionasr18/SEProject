@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import '../App.css'
 import { LoadingContext } from "../LoadingContextWrapper";
 import NavigationBar from "../NavigationBar";
+import axios from "axios";
 
 const ExploreUser = () => {
     const STATE = {
@@ -27,6 +28,25 @@ const ExploreUser = () => {
     //     FillData()
     // }, [])
     const handleSendRequest = useCallback(async (id) => {
+        debugger
+        if(id.flag==='connected'){
+            let token = sessionStorage.getItem('auth');
+
+            axios.delete(`http://localhost:3001/api/connections/friendRequests/accepted/${id.connection_id}`, {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+        
+            })
+            .then((response) => {
+              alert(response.data.message);
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        }
+        else{
         let token = sessionStorage.getItem('auth');
 
         let objToSave = {
@@ -39,7 +59,7 @@ const ExploreUser = () => {
             alert('Request Sent Successfully.')
             // FillData()
             // nav('/login')
-        }
+        }}
 
     }, [])
     const drawCards = useCallback(() => {
@@ -56,7 +76,7 @@ const ExploreUser = () => {
                             <span className="text-sm text-gray-500 dark:text-gray-400">{e.address}</span>
                             <div className="flex mt-4 space-x-3 md:mt-6">
                                 {/* <a href="#" className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add friend</a> */}
-                                <button className="btn-primary" disabled={e.flag!=='notYet'} onClick={()=>handleSendRequest(e)}>{e.flag==='pending'?'Pending Request':e.flag==="connected"?'Already Friends':'Add Friend'}</button>
+                                <button className="btn-primary" disabled={e.flag==='pending'} onClick={()=>handleSendRequest(e)}>{e.flag==='pending'?'Pending Request':e.flag==="connected"?'Remove Friend':'Add Friend'}</button>
                             </div>
                         </div>
                     </div>
