@@ -6,6 +6,7 @@ import NavigationBar from './NavigationBar';
 import FileDialogue from './FileDialogue';
 import { Buffer } from 'buffer';
 
+import Swal from "sweetalert2";
 
 // import './app.css';
 // import data from './Users.json';
@@ -104,8 +105,13 @@ export default function SignUp() {
             const data2 = await FetchData('http://localhost:3001/api/users/createChatUser', 'post', { username: state.username })
 
 
-
-            alert('Sign Up succesful. Please return to the Login Page')
+            Swal.fire({
+                title: "Success",
+                text: "Sign Up succesful. Please return to the Login Page",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            // alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }
@@ -136,10 +142,15 @@ export default function SignUp() {
         const data = await FetchData('http://localhost:3001/api/users/updateUserProfile', 'post', params)
         if (data.success === 1) {
             console.log('username', state.username);
+            Swal.fire({
+                title: "Success",
+                text: "Sign Up succesful. Please return to the Login Page",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
 
 
-
-            alert('Sign Up succesful. Please return to the Login Page')
+           // alert('Sign Up succesful. Please return to the Login Page')
 
             // nav('/login')
         }

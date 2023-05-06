@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './AcceptDeclinePlayers.css';
-import moment from 'moment'
+// import moment from 'moment'
 import { FetchData } from '../functions';
 import { isEmpty } from 'lodash';
 import logo from './SESilouhette.jpg';
+import Swal from "sweetalert2";
 
 
 
@@ -61,8 +62,13 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
       
       }
       const dataMail = await FetchData('http://localhost:3001/api/sendMail', 'post', _data)
-
-      alert('Sent succesfully.')
+      Swal.fire({
+        title: "Success",
+        text: "Sent succesfully.",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    //  alert('Sent succesfully.')
       FillData()
       // nav('/login')
     }
@@ -83,7 +89,13 @@ const AcceptDeclinePlayers = ({ event, onSwipe }) => {
     
     }
     const dataMail = await FetchData('http://localhost:3001/api/sendMail', 'post', _data)
-      alert('Sent succesfully.')
+    Swal.fire({
+      title: "Success",
+      text: "Sent succesfully.",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+    //  alert('Sent succesfully.')
       FillData()
     }
   }, [state])
@@ -207,7 +219,7 @@ return(<>
                 <div className="widget-49">
                     <div className="widget-49-title-wrapper">
                         <div className="widget-49-date-primary">
-                            <span className="widget-49-date-day">{moment(currentRequest.event_date).format('MM/DD/YYYY')}</span>
+                            {/* <span className="widget-49-date-day">{moment(currentRequest.event_date).format('MM/DD/YYYY')}</span> */}
                             {/* <span className="widget-49-date-month">{currentRequest.event_date}</span> */}
                         </div>
                         <div className="widget-49-meeting-info">

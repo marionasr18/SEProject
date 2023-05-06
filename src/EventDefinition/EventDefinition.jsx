@@ -14,6 +14,7 @@ import 'react-clock/dist/Clock.css';
 import AcceptDeclinePlayers from "./AcceptDeclinePlayers";
 import { Nav, NavItem, NavLink, TabContent, TabPane, Button } from "reactstrap";
 import SeeUserRequest from "./SeeUserRequest";
+import Swal from "sweetalert2";
 
 
 const EventDefinition = () => {
@@ -162,7 +163,13 @@ FillData()
     const handleCreateGame = useCallback(async () => {
         let token = sessionStorage.getItem('auth');
 if(startTime>endtTime){
-    alert('Pick and end Time larger than the start time!')
+    // alert('Pick and end Time larger than the start time!')
+    Swal.fire({
+        title: "Error",
+        text: "Pick and end Time larger than the start time!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     return
 }
         let objToSave = {
@@ -180,11 +187,16 @@ if(startTime>endtTime){
         const data = await FetchData('http://localhost:3001/api/events/createEvent', 'post', objToSave)
         if (data.data.success === 1) {
             setState(STATE)
-
+            Swal.fire({
+                title: "Success",
+                text: "Event created successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
             FillData()
             // nav('/login')
         }
-    }, [state])
+    }, [state,startTime,endtTime])
     return (
         <>
             <NavigationBar />

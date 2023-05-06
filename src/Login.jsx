@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 // import './login.css'
 import { LoadingContext } from "./LoadingContextWrapper";
 import { unstable_composeClasses } from "@mui/material";
+import Swal from "sweetalert2";
 
 
 
@@ -66,7 +67,13 @@ const Login = () => {
             setRole(userData)
             if (userData.data.success === 0) {
                 // Invalid password
-                alert("Invalid Username or Password")
+                Swal.fire({
+                    title: "Error",
+                    text: "Invalid username or password",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                  });
+                // alert("Invalid Username or Password")
             } else if (userData.data.success === 1) {
 
 
@@ -79,7 +86,13 @@ const Login = () => {
             }
         } else {
             // Username not found
-            alert("Invalid Username or Password")
+            Swal.fire({
+                title: "Error",
+                text: "Invalid username or password",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+           // alert("Invalid Username or Password")
         }
     }
     const handleSignUp = useCallback(() => {

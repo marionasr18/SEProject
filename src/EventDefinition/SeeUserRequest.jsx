@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import moment from 'moment'
+// import moment from 'moment'
 import { FetchData } from '../functions';
 import { isEmpty } from 'lodash';
 
@@ -39,7 +39,7 @@ const SeeUserRequest = ({ event, onSwipe }) => {
 {e.status}    </p>
   </div>
   <div className="px-6 pt-4 pb-2">
-    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{moment(e.event_date).format('MM/DD/YYYY')}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{e.event_date}</span>
     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{e.sport_name}</span>
     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{e.field_name}</span>
   </div>
